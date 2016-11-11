@@ -4,28 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GettingReal
+namespace MEG
 {
     public abstract class User
     {
-        protected string Login { get;}
-        protected byte Password { get { ; } }   
+        public string Username { get; set; }
+        public string Password { get; set; }
+        protected int Privileges { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        public User(int login, string password) {
-         
+        public User(string un, string pw, string fn, string ln) {
+            Privileges = 0;
         }
 
-        private string HashPassword(string PW) {
-            var md5 = new MD5CryptoServiceProvider();
-            return md5data = md5.ComputeHash(data);
-            
+        public bool CheckLogin(string un, string pw) {
+            bool canLogin = false; 
+            if (Username == un && pw == Password) {
+                canLogin = true;
+            }
+            return canLogin;
         }
-
-        private string UnhashPassword()
-        {
-            var data = Encoding.ASCII.GetBytes(password);
-
-            var hashedPassword = ASCIIEncoding.GetString(md5data);
-        }
+      
     }
 }

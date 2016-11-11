@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GettingReal
+namespace MEG
 {
-    class StudentController
+    public enum Subject
     {
-        login(user)
-
+        English, Danish, Mathematics, Physics
     }
 }
