@@ -12,10 +12,12 @@ namespace ApplicationTest
         public void CanCreateTeacher()
         {
             MEGController MC = new MEGController();
-          //  ITeacher t = MC.CreateTeacher();
-           // Assert.AreEqual();
+            ITeacher t = new Teacher("mag123", "password", "Magrethe", "");
+            Assert.AreEqual("", t.ToString());
+
         }
 
+        /*
         [TestMethod]
         public void CanAssignTeacherToClassRooms() {
             MEGController MC = new MEGController();
@@ -31,7 +33,7 @@ namespace ApplicationTest
             string ln = "Hvidt";
             t.CreateStudent(className, fn, ln);
             Assert.AreEqual("Student[Username=alhvi13,Password=password,Firstname=Alexander,Lastname=Hvidt]", t.ToString()); 
-            */
+          
         }
 
         [TestMethod]
@@ -45,7 +47,7 @@ namespace ApplicationTest
         {
 
         }
-
+       */
     }
 
 }

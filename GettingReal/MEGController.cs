@@ -15,31 +15,54 @@ namespace MEG
 
         public MEGController() {
             InitClassrooms();
-            //LoadStudents();
             //LoadTeacher();
         }
 
         public void CreateTeacher(string un, string pw, string fn, string ln)
         {
-            //_teachers.Add(new Teacher());
+            Teacher t = new Teacher(un, pw, fn, ln);
+            _teachers.Add(t);
         }
 
         private void InitClassrooms()
         {
-            _classRooms.Add(new ClassRoom());
+            _classRooms.Add(new ClassRoom("1.B"));
+            _classRooms.Add(new ClassRoom("2.B"));
+            _classRooms.Add(new ClassRoom("3.B"));
+            _classRooms.Add(new ClassRoom("1.A"));
+            _classRooms.Add(new ClassRoom("2.A"));
+            _classRooms.Add(new ClassRoom("3.A"));
+
+        }
+
+        private ClassRoom FindClassRoom() {
+            ClassRoom cr = (ClassRoom) new object();
+            foreach (ClassRoom c in _classRooms) {
+                cr = c; 
+            }
+            return cr;
         }
 
         public bool TeacherLogin(string un, string pw) {
-
+            bool st = false;
             foreach (Teacher t in _teachers) {
-                //t.CheckLogin()
+                if (t.CheckLogin(un, pw)) st = true;
             }
-            return true;
+            return st;
         }
 
-        public List<string> GetClassNames()
+        public List<string> GetClassRoomNames()
         {
-            GetClassNames();
+            List<string> rl = new List<string>();
+            foreach (ClassRoom c in _classRooms) {
+                rl.Add(c.ClassName);
+            }
+            return rl;
+        }
+
+        public void CreateStudent(string fn, string ln)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -32,10 +32,14 @@ namespace CLI
             Console.WriteLine("2. CreateStudent()");
             Console.WriteLine("3. TeacherLogin()");
             Console.WriteLine("4. StudentLogin()");
-            int option = 0;
-            int.TryParse(Console.ReadLine(), out);
-
+            Console.WriteLine("5. CreateTask()");
+            Console.WriteLine("0. Close");
+            int option;
+            int.TryParse(Console.ReadLine(), out option);
             switch (option) {
+                case 0:
+                    running = false;
+                    break;
                 case 1: CreateTeacher();
                     break;
                 case 2: CreateStudent();
@@ -55,11 +59,20 @@ namespace CLI
             string un = Console.ReadLine();
             Console.WriteLine("Type a password: ");
             string pw = Console.ReadLine();
-            Console.WriteLine("Type your first name");
+            Console.WriteLine("Type your first name: ");
             string fn = Console.ReadLine();
-            Console.WriteLine("Type your last name");
+            Console.WriteLine("Type your last name: ");
             string ln = Console.ReadLine();
             MEGC.CreateTeacher(un, pw, fn, ln);
+            Console.WriteLine("How many classes are you teaching?");
+            int nb;
+            int.TryParse(Console.ReadLine(), out nb);
+
+            for(int k = 0; k < nb; k++) {
+                AssignTeacher();
+            }
+           
+            Console.Clear();
 
         }
 
@@ -67,17 +80,25 @@ namespace CLI
         {
             Console.Clear();
             Console.WriteLine("Classes: \n");
-            foreach (string s in MEGC.GetClassNames())
+            foreach (string s in MEGC.GetClassRoomNames())
             {
-                Console.WriteLine("\n");
+                Console.WriteLine("\n" + s);
             }
-            Console.WriteLine("How many classes is the teacher, teaching?");
+            Console.WriteLine("Type the name of the class:");
 
         }
 
         private void CreateStudent()
         {
-            
+            Console.Clear();
+            Console.WriteLine("Create a student");
+            string pw = Console.ReadLine();
+            Console.WriteLine("Type your first name");
+            string fn = Console.ReadLine();
+            Console.WriteLine("Type your last name");
+            string ln = Console.ReadLine();
+            MEGC.CreateStudent(fn, ln);
+
         }
 
         private void TeacherLogin() {
