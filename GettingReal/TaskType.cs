@@ -8,7 +8,6 @@ namespace MEG
 {
     public enum TaskType
     {
-        
         Assignment=1,
         Homework=2,
         Questionnaire=3
