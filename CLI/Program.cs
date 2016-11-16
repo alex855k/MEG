@@ -83,7 +83,12 @@ namespace CLI
                 Console.WriteLine("\n" + s);
             }
             Console.WriteLine("Type the name of the class:");
-
+            string cr = "";
+            while (!MEGC.ClassRoomExists(cr)) {
+                    if (cr != "") Console.WriteLine("Error: Either the teacher is already assigned to the class or the class doesn't exist try again.");
+                    cr = Console.ReadLine();
+                  }
+            Console.WriteLine("Teacher assigned to class");
         }
 
         private void CreateStudent()

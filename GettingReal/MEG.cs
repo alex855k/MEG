@@ -74,5 +74,16 @@ namespace MEG
         {
             throw new NotImplementedException();
         }
+
+        public bool ClassRoomExists(string cr)
+        {
+            bool cond = false;
+            foreach (ClassRoom c in _classRooms) {
+                if (c.ClassName == cr) {
+                    cond = true;
+                }
+            }
+            return cond;
+        }
     }
 }
