@@ -29,6 +29,7 @@ namespace CLI
         public void Menu() {
             Console.WriteLine("MEG Menu:");
             Console.WriteLine("1. CreateTeacher()");
+            Console.WriteLine("1.B GetTeacherNames()");
             Console.WriteLine("2. CreateStudent()");
             Console.WriteLine("3. TeacherLogin()");
             Console.WriteLine("4. StudentLogin()");

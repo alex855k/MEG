@@ -51,13 +51,25 @@ namespace MEG
 
         }
 
-        private ClassRoom FindClassRoom() {
+        private ClassRoom getClassRoom(string classRoom) {
+
             ClassRoom cr = (ClassRoom) new object();
             foreach (ClassRoom c in _classRooms) {
-                cr = c; 
+                if(classRoom == c.ClassName) cr = c; 
             }
             return cr;
         }
+
+        private bool FindClassRoom(string classRoom)
+        {
+            bool canFindClassRoom = false;
+            foreach (ClassRoom c in _classRooms)
+            {
+                if(c.ClassName
+            }
+            return canFindClassRoom;
+        }
+
 
         public bool TeacherLogin(string un, string pw) {
             bool st = false;
