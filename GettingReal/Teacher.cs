@@ -12,7 +12,7 @@ namespace MEG
         string ToString();
     }
 
-    public class Teacher : User, ITeacher
+    public class Teacher : User, ITeacher, IUser
     {     
 
         private SortedList<ClassRoom, List<Subject>> _classRooms = new SortedList<ClassRoom, List<Subject>>();

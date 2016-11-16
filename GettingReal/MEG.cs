@@ -12,7 +12,7 @@ namespace MEG
         List<Teacher> _teachers = new List<Teacher>();
         List<Student> _students = new List<Student>();
         List<ClassRoom> _classRooms = new List<ClassRoom>();
-
+        IUser user = new Teacher("", "","","","");
 
         public MEGController() {
             InitClassrooms();
@@ -94,9 +94,9 @@ namespace MEG
             throw new NotImplementedException();
         }
 
-        public bool TeacherLogin()
+        public bool TeacherLogin(string un, string pw)
         {
-            
+            FindTeacher(_students);
         }
 
         public bool StudentLogin(string un, string pw)
