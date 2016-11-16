@@ -74,5 +74,14 @@ namespace MEG
         {
             throw new NotImplementedException();
         }
+
+        public void CreateTask(string description, string type, string sp)
+        {
+            string typeCapitalized = type.First().ToString().ToUpper() + type.Substring(1);
+            TaskType tasktype = (TaskType)Enum.Parse(typeof(TaskType), typeCapitalized);
+            int studyPoints;
+            int.TryParse(sp, out studyPoints);
+            Task newTask = new Task(description, tasktype, studyPoints);
+        }
     }
 }

@@ -48,7 +48,23 @@ namespace CLI
                     break;
                 case 4: StudentLogin();
                     break;
+                case 5: CreateTask();
+                    break;
             }
+        }
+
+        private void CreateTask()
+        {
+            Console.Clear();
+            Console.WriteLine("Create Task:");
+            Console.WriteLine("Type a description of the task:");
+            string description = Console.ReadLine();
+            Console.WriteLine("Type the type of task this is:");
+            string type = Console.ReadLine();
+            Console.WriteLine("Type the amount of study points this task is worth:");
+            string sp = Console.ReadLine();
+            MEGC.CreateTask(description, type, sp);
+            Console.Clear();
         }
 
         public void CreateTeacher()
@@ -83,7 +99,7 @@ namespace CLI
                 Console.WriteLine("\n" + s);
             }
             Console.WriteLine("Type the name of the class:");
-
+            
         }
 
         private void CreateStudent()
