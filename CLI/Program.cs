@@ -71,9 +71,7 @@ namespace CLI
             for(int k = 0; k < nb; k++) {
                 AssignTeacher();
             }
-           
             Console.Clear();
-
         }
 
         private void AssignTeacher()
@@ -93,22 +91,37 @@ namespace CLI
             Console.Clear();
             Console.WriteLine("Create a student");
             string pw = Console.ReadLine();
-            Console.WriteLine("Type your first name");
+            Console.WriteLine("Type the first name");
             string fn = Console.ReadLine();
-            Console.WriteLine("Type your last name");
+            Console.WriteLine("Type the last name");
             string ln = Console.ReadLine();
-            MEGC.CreateStudent(fn, ln);
+            //MEGC.CreateStudent("1.B", fn, ln);
 
         }
 
         private void TeacherLogin() {
-            
+            Console.Clear();
+            Console.WriteLine();
+            string un = Console.ReadLine();
+            string pw = Console.ReadLine();
 
+            if (MEGC.TeacherLogin(un, pw))
+            {
+                Console.WriteLine("You are logged in.");
+            }
+            else
+            {
+                Console.WriteLine("Wrong login info.");
+            }
+            
         }
 
         private void StudentLogin()
         {
+            string un = Console.ReadLine();
+            string pw = Console.ReadLine();
 
+            
 
         }
     }

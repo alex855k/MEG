@@ -67,7 +67,7 @@ namespace MEG
         public override string ToString()
         {
             string s = "Teacher[Username=" + this.Username + ",Password=" + this.Password + 
-                        ",Privileges=" + this.Privileges + ",FirstName=" + this.FirstName + 
+                        ",Firstname="+ this.FirstName+
                         ",LastName=" +this.LastName+"]";
 
             return s;

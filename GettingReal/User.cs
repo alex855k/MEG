@@ -10,12 +10,10 @@ namespace MEG
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        protected int Privileges { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
         public User(string un, string pw, string fn, string ln) {
-            Privileges = 0;
         }
 
         public bool CheckLogin(string un, string pw) {

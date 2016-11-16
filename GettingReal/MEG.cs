@@ -64,5 +64,15 @@ namespace MEG
         {
             throw new NotImplementedException();
         }
+
+        public bool TeacherLogin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool StudentLogin(string un, object ln)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
