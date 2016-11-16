@@ -9,7 +9,6 @@ namespace CLI
 {
     public class Program
     {
-        //hello?
         private bool running;
         private MEGController MEGC;
         static void Main(string[] args)
@@ -54,28 +53,34 @@ namespace CLI
 
         public void CreateTeacher()
         {
+            string un = "";
             Console.Clear();
-            Console.WriteLine("Create a teacher:");
-            Console.WriteLine("Type a username: ");
-            string un = Console.ReadLine();
-            Console.WriteLine("Type a password: ");
-            string pw = Console.ReadLine();
-            Console.WriteLine("Type your first name: ");
-            string fn = Console.ReadLine();
-            Console.WriteLine("Type your last name: ");
-            string ln = Console.ReadLine();
-            MEGC.CreateTeacher(un, pw, fn, ln);
+            bool canCreateTeacher = false;
+            while (!canCreateTeacher) { 
+                Console.WriteLine("Create a teacher:");
+                Console.WriteLine("Type a username: ");
+                un = Console.ReadLine();
+                Console.WriteLine("Type a password: ");
+                string pw = Console.ReadLine();
+                Console.WriteLine("Type your first name: ");
+                string fn = Console.ReadLine();
+                Console.WriteLine("Type your last name: ");
+                string ln = Console.ReadLine();
+                Console.WriteLine("Type your email: ");
+                string email = Console.ReadLine();
+                MEGC.CreateTeacher(un, pw, fn, ln, email);
+            }
             Console.WriteLine("How many classes are you teaching?");
             int nb;
             int.TryParse(Console.ReadLine(), out nb);
 
             for(int k = 0; k < nb; k++) {
-                AssignTeacher();
+                AssignTeacher(un);
             }
             Console.Clear();
         }
 
-        private void AssignTeacher()
+        private void AssignTeacher(string teacherUN)
         {
             Console.Clear();
             Console.WriteLine("Classes: \n");
@@ -84,11 +89,13 @@ namespace CLI
                 Console.WriteLine("\n" + s);
             }
             Console.WriteLine("Type the name of the class:");
-            string cr = "";
-            while (!MEGC.ClassRoomExists(cr)) {
-                    if (cr != "") Console.WriteLine("Error: Either the teacher is already assigned to the class or the class doesn't exist try again.");
-                    cr = Console.ReadLine();
-                  }
+            bool canAssignTeacher = false;
+            string classRoomName = "";
+            while (!canAssignTeacher) {
+                    classRoomName = Console.ReadLine();
+                    if (MEGC.AssignTeacher(teacherUN, classRoomName)) 
+                    if(!canAssignTeacher) Console.WriteLine("Error: Either the teacher is already assigned to the class or the class doesn't exist try again.");
+            }
             Console.WriteLine("Teacher assigned to class");
         }
 

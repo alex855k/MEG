@@ -16,13 +16,16 @@ namespace MEG
     {     
 
         private SortedList<ClassRoom, List<Subject>> _classRooms = new SortedList<ClassRoom, List<Subject>>();
+        public string Email { get; private set; }
 
-        public Teacher(string un, string pw, string fn, string ln) : base(un, pw, fn, ln)
+
+        public Teacher(string un, string pw, string fn, string ln, string email) : base(un, pw, fn, ln)
         {
             this.Username = un;
             this.Password = pw;
             this.FirstName = fn;
             this.LastName = ln;
+            this.Email = email;
         }
 
 

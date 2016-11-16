@@ -18,10 +18,26 @@ namespace MEG
             //LoadTeacher();
         }
 
-        public void CreateTeacher(string un, string pw, string fn, string ln)
+
+
+        public bool CreateTeacher(string un, string pw, string fn, string ln, string email)
         {
-            Teacher t = new Teacher(un, pw, fn, ln);
-            _teachers.Add(t);
+            bool canCreateTeacher = false;
+            if (!FindTeacher(email){ 
+                Teacher t = new Teacher(un, pw, fn, ln, email);
+                _teachers.Add(t);
+                canCreateTeacher = true;
+            }
+            return canCreateTeacher;
+        }
+
+        private bool FindTeacher(string email)
+        {
+            bool canFindTeacer = false;
+            foreach (Teacher t in _teachers) {
+                if (t.Email == email) canFindTeacer = true; 
+            }
+            return canFindTeacer;
         }
 
         private void InitClassrooms()
@@ -84,6 +100,14 @@ namespace MEG
                 }
             }
             return cond;
+        }
+
+        public bool AssignTeacher(string teacherUN, string classRoomName)
+        {
+            bool cond = false;
+            
+            if(this.FindClassRoom == Fteacher )
+            return false;
         }
     }
 }
