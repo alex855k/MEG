@@ -132,11 +132,19 @@ namespace CLI
 
         private void StudentLogin()
         {
+            Console.Clear();
+            Console.WriteLine("--- Student login ---");
+            Console.WriteLine("Type your username: ");
             string un = Console.ReadLine();
+            Console.WriteLine("Type your password: ");
             string pw = Console.ReadLine();
-
-            
-
+            if (MEGC.StudentLogin(un, pw))
+            {
+                Console.WriteLine("You have been logged in.");
+            }
+            else {
+                this.StudentLogin();
+            }
         }
     }
 }

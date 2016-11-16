@@ -13,6 +13,7 @@ namespace MEG
         List<Student> _students = new List<Student>();
         List<ClassRoom> _classRooms = new List<ClassRoom>();
 
+
         public MEGController() {
             InitClassrooms();
             //LoadTeacher();
@@ -23,7 +24,7 @@ namespace MEG
         public bool CreateTeacher(string un, string pw, string fn, string ln, string email)
         {
             bool canCreateTeacher = false;
-            if (!FindTeacher(email){ 
+            if (!FindTeacher(email)){ 
                 Teacher t = new Teacher(un, pw, fn, ln, email);
                 _teachers.Add(t);
                 canCreateTeacher = true;
@@ -51,7 +52,7 @@ namespace MEG
 
         }
 
-        private ClassRoom getClassRoom(string classRoom) {
+        private ClassRoom GetClassRoom(string classRoom) {
 
             ClassRoom cr = (ClassRoom) new object();
             foreach (ClassRoom c in _classRooms) {
@@ -65,7 +66,7 @@ namespace MEG
             bool canFindClassRoom = false;
             foreach (ClassRoom c in _classRooms)
             {
-                if(c.ClassName
+                if (c.ClassName == classRoom) canFindClassRoom = true;
             }
             return canFindClassRoom;
         }
@@ -95,12 +96,12 @@ namespace MEG
 
         public bool TeacherLogin()
         {
-            throw new NotImplementedException();
+            
         }
 
-        public bool StudentLogin(string un, object ln)
+        public bool StudentLogin(string un, string pw)
         {
-            throw new NotImplementedException();
+            FindStudent(_students);
         }
 
         public bool ClassRoomExists(string cr)
@@ -114,12 +115,42 @@ namespace MEG
             return cond;
         }
 
-        public bool AssignTeacher(string teacherUN, string classRoomName)
+        private bool teacherIsAssignedToClassRoom(string cr, Teacher teacher) {
+
+            bool isAssigned = false;
+            _
+            return isAssigned;
+        }
+
+        public bool AssignTeacher(string email, string classRoomName)
         {
-            bool cond = false;
-            
-            if(this.FindClassRoom == Fteacher )
+            bool canAssignTeacher = false;
+
+            if (this.FindTeacher(email)) {
+                Teacher t = GetTeacher(email)
+
+                if (FindClassRoom(classRoomName)) {
+
+                    if (GetClassRoom(classRoomName).AddTeacher(t);
+
+                }
+                else
+                {
+                    throw new Exception("Couldn't find classroom");
+                }
+            }
             return false;
+        }
+
+        private Teacher GetTeacher(string email)
+        {
+            Teacher teacher = (Teacher)new Object(); 
+            foreach (Teacher t in _teachers) {
+                if (t.Email==email) {
+                    teacher = t;
+                }
+            }
+            return teacher;
         }
     }
 }
