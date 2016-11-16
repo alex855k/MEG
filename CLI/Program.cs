@@ -9,7 +9,6 @@ namespace CLI
 {
     public class Program
     {
-        //hello?
         private bool running;
         private MEGController MEGC;
         static void Main(string[] args)
