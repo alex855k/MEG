@@ -9,6 +9,7 @@ namespace CLI
 {
     public class Program
     {
+        //fml
         private bool running;
         private MEGController MEGC;
         static void Main(string[] args)
