@@ -6,7 +6,6 @@ using System.Text;
 namespace MEG
 {
     public interface ITeacher {
-        bool CheckLogin(string un, string pw);
         void CreateStudent(string cn, string fn, string ln);
         bool CreateTask(string className, Subject subject, string description, int studentPointValue, TaskType taskType);
         string ToString();
@@ -19,13 +18,12 @@ namespace MEG
         public string Email { get; private set; }
 
 
-        public Teacher(string un, string pw, string fn, string ln, string email) : base(un, pw, fn, ln)
+        public Teacher(string un, string pw, string fn, string ln, string email) : base(fn, ln)
         {
             this.Username = un;
             this.Password = pw;
-            this.FirstName = fn;
-            this.LastName = ln;
             this.Email = email;
+            this.UserType = "Teacher";
         }
 
 
@@ -38,20 +36,20 @@ namespace MEG
         }
 
         public void CreateStudent(string cn, string fn, string ln)
-       {
+        {
             foreach (var c in _classRooms) {
                 if (c.Key.ClassName == cn) {
-                    c.Key.AddStudent(new Student(GenerateUsername(fn), GeneratePassword(), fn, ln));
+                    c.Key.AddStudent(new Student(fn, ln));
                 }
             }    
         }
-
+        // NEED TO REFACTOR
         private string GenerateUsername(string fn)
         {
             Random rnd = new Random();
             return fn + rnd.Next(1,10) + rnd.Next(1, 10) + rnd.Next(1, 10);
         }
-
+        // NEED TO REFACTOR
         private string GeneratePassword()
         {
             const string valid = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -71,7 +69,7 @@ namespace MEG
         {
             string s = "Teacher[Username=" + this.Username + ",Password=" + this.Password + 
                         ",Firstname="+ this.FirstName+
-                        ",LastName=" +this.LastName+"]";
+                        ",LastName=" +this.LastName+ ",Email="+ this.Email +"]";
 
             return s;
         }
@@ -109,5 +107,6 @@ namespace MEG
             }
             return true;   
         }
+
     }
 }

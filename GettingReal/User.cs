@@ -8,21 +8,26 @@ namespace MEG
 {
     public abstract class User
     {
+        public string UserType { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public User(string un, string pw, string fn, string ln) {
+        public User(string fn, string ln) {
+            this.FirstName = fn;
+            this.LastName = ln;
         }
 
-        public bool CheckLogin(string un, string pw) {
+        public bool Login(string un, string pw) {
             bool canLogin = false; 
             if (Username == un && pw == Password) {
                 canLogin = true;
             }
             return canLogin;
         }
+
+
       
     }
 }

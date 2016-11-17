@@ -8,18 +8,15 @@ namespace MEG
 {
     public class MEGController
     {
-        
-        List<Teacher> _teachers = new List<Teacher>();
-        List<Student> _students = new List<Student>();
-        List<ClassRoom> _classRooms = new List<ClassRoom>();
-        IUser user = new Teacher("", "","","","");
+
+        private List<Teacher> _teachers = new List<Teacher>();
+        private List<Student> _students = new List<Student>();
+        private List<ClassRoom> _classRooms = new List<ClassRoom>();
+        public  List<IUser>_users = new List<IUser>();
 
         public MEGController() {
             InitClassrooms();
-            //LoadTeacher();
         }
-
-
 
         public bool CreateTeacher(string un, string pw, string fn, string ln, string email)
         {
@@ -31,6 +28,16 @@ namespace MEG
             }
             return canCreateTeacher;
         }
+
+        public void CreateTask(string description, string type, string sp)
+        {
+            string typeCapitalized = type.First().ToString().ToUpper() + type.Substring(1);
+            TaskType tasktype = (TaskType)Enum.Parse(typeof(TaskType), typeCapitalized);
+            int studyPoints;
+            int.TryParse(sp, out studyPoints);
+            Task newTask = new Task(description, tasktype, studyPoints);
+        }
+
 
         private bool FindTeacher(string email)
         {
@@ -71,15 +78,6 @@ namespace MEG
             return canFindClassRoom;
         }
 
-
-        public bool TeacherLogin(string un, string pw) {
-            bool st = false;
-            foreach (Teacher t in _teachers) {
-                if (t.CheckLogin(un, pw)) st = true;
-            }
-            return st;
-        }
-
         public List<string> GetClassRoomNames()
         {
             List<string> rl = new List<string>();
@@ -91,19 +89,16 @@ namespace MEG
 
         public void CreateStudent(string fn, string ln)
         {
-            throw new NotImplementedException();
+            _students.Add(new Student(fn, ln)); 
         }
 
-        public bool TeacherLogin(string un, string pw)
+        public string Login(string un, string pw)
         {
-            FindTeacher(_students);
+            foreach (IUser u in _users) {
+                if(u.Login(un, pw)) return u.UserType;
+            }
+                return "";
         }
-
-        public bool StudentLogin(string un, string pw)
-        {
-            FindStudent(_students);
-        }
-
         public bool ClassRoomExists(string cr)
         {
             bool cond = false;
@@ -115,31 +110,31 @@ namespace MEG
             return cond;
         }
 
+        //redundant - to be removed
+        /*
         private bool teacherIsAssignedToClassRoom(string cr, Teacher teacher) {
 
             bool isAssigned = false;
-            _
+       
             return isAssigned;
         }
-
+        */
         public bool AssignTeacher(string email, string classRoomName)
         {
             bool canAssignTeacher = false;
 
             if (this.FindTeacher(email)) {
-                Teacher t = GetTeacher(email)
+                Teacher t = GetTeacher(email);
 
                 if (FindClassRoom(classRoomName)) {
-
-                    if (GetClassRoom(classRoomName).AddTeacher(t);
-
+                    canAssignTeacher = GetClassRoom(classRoomName).AddTeacher(t);
                 }
                 else
                 {
                     throw new Exception("Couldn't find classroom");
                 }
             }
-            return false;
+            return canAssignTeacher;
         }
 
         private Teacher GetTeacher(string email)

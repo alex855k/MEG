@@ -9,7 +9,12 @@ namespace CLI
 {
     public class Program
     {
+
+        private string username;
+        private string usertype;
+        private bool isLoggedIn = false;
         private bool running;
+
         private MEGController MEGC;
         static void Main(string[] args)
         {
@@ -21,35 +26,79 @@ namespace CLI
             MEGC = new MEGController();
             running = true;
             while (running) {
-                Menu();
-
+                RunMenu();
             }
         }
 
-        public void Menu() {
+        public void PrintMenuText(){
+            Console.Clear();
+            if (isLoggedIn) {
+                Console.WriteLine("You are logged in as \n" + this.username  +"(" + this.usertype+ ")");
+            }
             Console.WriteLine("MEG Menu:");
             Console.WriteLine("1. CreateTeacher()");
-            Console.WriteLine("1.B GetTeacherNames()");
-            Console.WriteLine("2. CreateStudent()");
-            Console.WriteLine("3. TeacherLogin()");
-            Console.WriteLine("4. StudentLogin()");
-            Console.WriteLine("5. CreateTask()");
+            if (isLoggedIn)
+            {
+                Console.WriteLine("2. Logout");
+            }
+            else { 
+                Console.WriteLine("2. Login");
+            }
+            if (isLoggedIn)
+            {
+                if(usertype=="Teacher")Console.WriteLine("3. CreateTask()");
+                if(usertype == "Student")Console.WriteLine("3. CreateTask()");
+            }
             Console.WriteLine("0. Close");
+        }
+
+        public void RunMenu() {
+            PrintMenuText();
             int option;
             int.TryParse(Console.ReadLine(), out option);
-            switch (option) {
+            MenuSelectOption(option);
+        }
+
+        private void MenuSelectOption(int opt)
+        {
+            switch (opt)
+            {
                 case 0:
                     running = false;
                     break;
-                case 1: CreateTeacher();
+                case 1:
+                    CreateTeacher();
                     break;
-                case 2: CreateStudent();
+                case 2:
+                    if (isLoggedIn)
+                    {
+                        Console.Clear();
+                        Login();
+                    }
+                    else {
+                        Console.Clear();
+                        Logout();
+                    }
                     break;
-                case 3: TeacherLogin();
-                    break;
-                case 4: StudentLogin();
+                case 4:
+                    if (isLoggedIn) {
+                        if (usertype == "Student") {
+                            CreateStudent();
+                        }
+                        if (usertype == "Teacher")
+                        {
+
+                        }
+                    }
                     break;
             }
+        }
+
+        private void Logout()
+        {
+            isLoggedIn = false;
+            usertype = "";
+            username = "";
         }
 
         public void CreateTeacher()
@@ -113,37 +162,24 @@ namespace CLI
 
         }
 
-        private void TeacherLogin() {
-            Console.Clear();
-            Console.WriteLine();
-            string un = Console.ReadLine();
-            string pw = Console.ReadLine();
-
-            if (MEGC.TeacherLogin(un, pw))
-            {
-                Console.WriteLine("You are logged in.");
-            }
-            else
-            {
-                Console.WriteLine("Wrong login info.");
-            }
-            
-        }
-
-        private void StudentLogin()
+        private void Login()
         {
-            Console.Clear();
-            Console.WriteLine("--- Student login ---");
+            
+            Console.WriteLine("--- Login ---");
             Console.WriteLine("Type your username: ");
             string un = Console.ReadLine();
             Console.WriteLine("Type your password: ");
             string pw = Console.ReadLine();
-            if (MEGC.StudentLogin(un, pw))
+            if (!(MEGC.Login(un, pw) == ""))
             {
-                Console.WriteLine("You have been logged in.");
+                isLoggedIn = true;
+                username = un;
+                Console.WriteLine(username +" have been logged in.");
             }
             else {
-                this.StudentLogin();
+                this.Login();
+                Console.Clear();
+                Console.WriteLine("Either the password or username was incorrect.\n");
             }
         }
     }

@@ -7,6 +7,7 @@ namespace MEG
 {
     public interface IUser
     {
-    
+        bool Login(string un, string password);
+        string UserType { get; set;}
     }
 }

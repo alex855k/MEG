@@ -12,8 +12,8 @@ namespace ApplicationTest
         public void CanCreateTeacher()
         {
             MEGController MC = new MEGController();
-            ITeacher t = new Teacher("mag123", "password", "Magrethe", "Pedersen");
-            Assert.AreEqual("Teacher[Username=username,Password=password,Firstname=Magrethe,LastName=Pedersen]", t.ToString());
+            ITeacher t = new Teacher("mag123", "password", "Magrethe", "Pedersen", "magrther23@gmail.com");
+            Assert.AreEqual("Teacher[Username=username,Password=password,Firstname=Magrethe,LastName=Pedersen,Email=magrethe23@gmail.com]", t.ToString());
 
         }
 

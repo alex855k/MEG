@@ -11,6 +11,7 @@ namespace MEG
 
         private List<Student> _students = new List<Student>();
         private List<Teacher> _teachers = new List<Teacher>();
+        private List<Task> _tasks = new List<Task>();
 
 
         public ClassRoom(string cn) {
@@ -30,14 +31,27 @@ namespace MEG
             _students.Add(s);
         }
 
-        public void AddTeacher(Teacher t)
+
+        public bool AddTeacher(Teacher t)
         {
-            _teachers.Add(t);
+            bool canAddTeacher = false;
+            if (!_teachers.Contains(t)) { 
+                _teachers.Add(t);
+                canAddTeacher = true;
+            }
+            return canAddTeacher;
         }
 
-        public void AddTask(Task task)
+        // Note: to be updated because currently doesn't compare values of tasks, just compares location of task object in memory
+        public bool AddTask(Task task)
         {
-            throw new NotImplementedException();
+            bool canAddTask = false;
+            if (!_tasks.Contains(task)) { 
+
+                _tasks.Add(task);
+            }
+            return canAddTask;
         }
+
     }
 }
