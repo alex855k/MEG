@@ -30,14 +30,18 @@ namespace MEG
             _students.Add(s);
         }
 
-        public void AddTeacher(Teacher t)
+        public bool AddTeacher(Teacher t)
         {
-            _teachers.Add(t);
+            bool cond = false;
+            if (!_teachers.Contains(t)) { 
+                _teachers.Add(t);
+            }
+            return cond;
         }
 
         public void AddTask(Task task)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

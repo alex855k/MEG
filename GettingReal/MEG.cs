@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace MEG
 {
-    public class MEGController
+    public class MEG
     {
         
         List<Teacher> _teachers = new List<Teacher>();
         List<Student> _students = new List<Student>();
         List<ClassRoom> _classRooms = new List<ClassRoom>();
-        IUser user = new Teacher("", "","","","");
-
-        public MEGController() {
+        Dictionary<string,IUser> _users = new Dictionary<string,IUser>();
+        public MEG() {
             InitClassrooms();
             //LoadTeacher();
         }
-
 
 
         public bool CreateTeacher(string un, string pw, string fn, string ln, string email)
@@ -80,6 +78,16 @@ namespace MEG
             return st;
         }
 
+        public bool TeacherLogin(string un, string pw)
+        {
+            bool st = false;
+            foreach (Teacher t in _teachers)
+            {
+                if (t.CheckLogin(un, pw)) st = true;
+            }
+            return st;
+        }
+
         public List<string> GetClassRoomNames()
         {
             List<string> rl = new List<string>();
@@ -92,16 +100,6 @@ namespace MEG
         public void CreateStudent(string fn, string ln)
         {
             throw new NotImplementedException();
-        }
-
-        public bool TeacherLogin(string un, string pw)
-        {
-            FindTeacher(_students);
-        }
-
-        public bool StudentLogin(string un, string pw)
-        {
-            FindStudent(_students);
         }
 
         public bool ClassRoomExists(string cr)
@@ -118,7 +116,7 @@ namespace MEG
         private bool teacherIsAssignedToClassRoom(string cr, Teacher teacher) {
 
             bool isAssigned = false;
-            _
+            this.GetClassRoom(cr).
             return isAssigned;
         }
 
@@ -131,7 +129,7 @@ namespace MEG
 
                 if (FindClassRoom(classRoomName)) {
 
-                    if (GetClassRoom(classRoomName).AddTeacher(t);
+                    if (GetClassRoom(classRoomName).AddTeacher(t));
 
                 }
                 else
@@ -151,6 +149,21 @@ namespace MEG
                 }
             }
             return teacher;
+        }
+
+        public bool Login(string un, string pw)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetUserType(string username)
+        {
+            
+        }
+
+        public void CreateStudent(string v, string fn, string ln)
+        {
+            
         }
     }
 }

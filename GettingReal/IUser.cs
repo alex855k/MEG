@@ -7,6 +7,6 @@ namespace MEG
 {
     public interface IUser
     {
-    
+        GetUserType();
     }
 }
