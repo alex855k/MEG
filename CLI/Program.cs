@@ -9,7 +9,6 @@ namespace CLI
 {
     public class Program
     {
-
         private string username;
         private string usertype;
         private bool isLoggedIn = false;
@@ -25,34 +24,41 @@ namespace CLI
         public void Run() {
             MEGC = new MEGController();
             running = true;
+            
             while (running) {
-                RunMenu();
+                ShowMenu();
             }
         }
 
         public void PrintMenuText(){
             Console.Clear();
             if (isLoggedIn) {
-                Console.WriteLine("You are logged in as \n" + this.username  +"(" + this.usertype+ ")");
+                Console.WriteLine("You are logged in as: " + this.username  +"(" + this.usertype+ ")");
             }
             Console.WriteLine("MEG Menu:");
             Console.WriteLine("1. CreateTeacher()");
+            Console.WriteLine("2. GetTeacherinfo()");
             if (isLoggedIn)
             {
-                Console.WriteLine("2. Logout");
+                Console.WriteLine("3. Logout");
             }
             else { 
-                Console.WriteLine("2. Login");
+                Console.WriteLine("3. Login");
             }
             if (isLoggedIn)
             {
-                if(usertype=="Teacher")Console.WriteLine("3. CreateTask()");
-                if(usertype == "Student")Console.WriteLine("3. CreateTask()");
+                if(usertype=="Teacher")Console.WriteLine("4. CreateStudent()");
+                if(usertype == "Student")Console.WriteLine("4. CreateTask()");
+            }
+            if (isLoggedIn)
+            {
+                if (usertype == "Teacher") Console.WriteLine("5. CreateStudent()");
+                if (usertype == "Student") Console.WriteLine("5. CreateTask()");
             }
             Console.WriteLine("0. Close");
         }
 
-        public void RunMenu() {
+        public void ShowMenu() {
             PrintMenuText();
             int option;
             int.TryParse(Console.ReadLine(), out option);
@@ -70,28 +76,40 @@ namespace CLI
                     CreateTeacher();
                     break;
                 case 2:
+                    GetTeacherinfo();
+                    break;
+                case 3:
                     if (isLoggedIn)
                     {
                         Console.Clear();
-                        Login();
+                        Logout();
                     }
                     else {
                         Console.Clear();
-                        Logout();
+                        Login();
                     }
                     break;
                 case 4:
                     if (isLoggedIn) {
-                        if (usertype == "Student") {
+                        if (usertype == "Teacher") {
+                            Console.Clear();
                             CreateStudent();
                         }
-                        if (usertype == "Teacher")
+                        if (usertype == "Student")
                         {
-
+                            Console.Clear(); 
                         }
                     }
                     break;
             }
+        }
+
+        private void GetTeacherinfo()
+        {
+            foreach (string s in MEGC.GetTeacherInfo()) {
+                Console.WriteLine(s);
+            }
+            Console.ReadKey();
         }
 
         private void Logout()
@@ -118,12 +136,11 @@ namespace CLI
                 string ln = Console.ReadLine();
                 Console.WriteLine("Type your email: ");
                 string email = Console.ReadLine();
-                MEGC.CreateTeacher(un, pw, fn, ln, email);
+                canCreateTeacher = MEGC.CreateTeacher(un, pw, fn, ln, email);
             }
             Console.WriteLine("How many classes are you teaching?");
             int nb;
             int.TryParse(Console.ReadLine(), out nb);
-
             for(int k = 0; k < nb; k++) {
                 AssignTeacher(un);
             }
@@ -143,28 +160,41 @@ namespace CLI
             string classRoomName = "";
             while (!canAssignTeacher) {
                     classRoomName = Console.ReadLine();
-                    if (MEGC.AssignTeacher(teacherUN, classRoomName)) 
+                    canAssignTeacher = MEGC.AssignTeacher(teacherUN, classRoomName);
                     if(!canAssignTeacher) Console.WriteLine("Error: Either the teacher is already assigned to the class or the class doesn't exist try again.");
             }
             Console.WriteLine("Teacher assigned to class");
+        }
+
+        private string SelectClass() {
+
+            string classSelection = "";
+
+            Console.WriteLine("Select a class:");
+           /* MEGC.GetTeacherClassRooms(string username);
+            foreach () {
+                
+            }
+            */
+            return classSelection; 
         }
 
         private void CreateStudent()
         {
             Console.Clear();
             Console.WriteLine("Create a student");
-            string pw = Console.ReadLine();
             Console.WriteLine("Type the first name");
             string fn = Console.ReadLine();
             Console.WriteLine("Type the last name");
             string ln = Console.ReadLine();
-            //MEGC.CreateStudent("1.B", fn, ln);
-
+            MEGC.CreateStudent(fn, ln, this.username);
+            Console.Clear();
         }
+
+        
 
         private void Login()
         {
-            
             Console.WriteLine("--- Login ---");
             Console.WriteLine("Type your username: ");
             string un = Console.ReadLine();
@@ -174,12 +204,14 @@ namespace CLI
             {
                 isLoggedIn = true;
                 username = un;
+                this.usertype = MEGC.GetUserType(username);
                 Console.WriteLine(username +" have been logged in.");
+                Console.ReadKey();
             }
             else {
-                this.Login();
                 Console.Clear();
                 Console.WriteLine("Either the password or username was incorrect.\n");
+                this.Login();
             }
         }
     }

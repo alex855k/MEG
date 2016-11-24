@@ -12,10 +12,18 @@ namespace MEG
         private List<Teacher> _teachers = new List<Teacher>();
         private List<Student> _students = new List<Student>();
         private List<ClassRoom> _classRooms = new List<ClassRoom>();
-        public  List<IUser>_users = new List<IUser>();
+        public  List<IUser> _users = new List<IUser>();
 
         public MEGController() {
             InitClassrooms();
+            InitTeachers();
+        }
+
+        private void InitTeachers()
+        {
+            CreateTeacher("alex01", "pass", "Alexander", "Hvidt", "alexander2341@gmail.com");
+            CreateTeacher("matt02", "pass", "Matthew", "Peterson", "blabla@blab.com");
+            CreateTeacher("hedviga03", "pass", "Hedviga", "something", "dsaasdsdsad");
         }
 
         public bool CreateTeacher(string un, string pw, string fn, string ln, string email)
@@ -24,6 +32,7 @@ namespace MEG
             if (!FindTeacher(email)){ 
                 Teacher t = new Teacher(un, pw, fn, ln, email);
                 _teachers.Add(t);
+                _users.Add(t);
                 canCreateTeacher = true;
             }
             return canCreateTeacher;
@@ -61,7 +70,7 @@ namespace MEG
 
         private ClassRoom GetClassRoom(string classRoom) {
 
-            ClassRoom cr = (ClassRoom) new object();
+            ClassRoom cr = new ClassRoom("");
             foreach (ClassRoom c in _classRooms) {
                 if(classRoom == c.ClassName) cr = c; 
             }
@@ -85,11 +94,6 @@ namespace MEG
                 rl.Add(c.ClassName);
             }
             return rl;
-        }
-
-        public void CreateStudent(string fn, string ln)
-        {
-            _students.Add(new Student(fn, ln)); 
         }
 
         public string Login(string un, string pw)
@@ -129,23 +133,60 @@ namespace MEG
                 if (FindClassRoom(classRoomName)) {
                     canAssignTeacher = GetClassRoom(classRoomName).AddTeacher(t);
                 }
-                else
-                {
-                    throw new Exception("Couldn't find classroom");
-                }
             }
             return canAssignTeacher;
         }
 
         private Teacher GetTeacher(string email)
         {
-            Teacher teacher = (Teacher)new Object(); 
+            Teacher teacher = new Teacher("", ""); 
             foreach (Teacher t in _teachers) {
                 if (t.Email==email) {
                     teacher = t;
                 }
             }
             return teacher;
+        }
+
+        public List<string> GetTeacherInfo() {
+            List<string> teachers = new List<string>();
+            foreach(Teacher t in _teachers)
+            {
+                teachers.Add(t.ToString());
+            }
+            return teachers; 
+        }
+
+        public string GetUserType(string un)
+        {
+            string rs = "";
+            foreach (IUser u in _users) { 
+                if (u.UserExists(un)) rs = u.UserType;
+            }
+            return rs;
+        }
+
+
+
+        public bool CreateStudent(string fn, string ln, string classRoom)
+        {
+            Student s = new Student(fn, ln);
+            _users.Add(s);
+            _students.Add(s);
+            FindClassRoom(classRoom);
+
+            this.GetClassRoom(classRoom).AddStudent(s);
+            return true;
+        }
+
+        public void GetTeacherClassRooms(string username)
+        {
+            /*
+            foreach (GetTeacher())
+            {
+
+            }
+            */
         }
     }
 }

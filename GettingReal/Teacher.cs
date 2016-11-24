@@ -26,6 +26,10 @@ namespace MEG
             this.UserType = "Teacher";
         }
 
+        public Teacher(string fn, string ln) : base(fn,ln)
+        {
+
+        }
 
         public List<string> getClassRooms() {
             List<string> rl = new List<string>();

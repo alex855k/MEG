@@ -34,12 +34,8 @@ namespace MEG
 
         public bool AddTeacher(Teacher t)
         {
-            bool canAddTeacher = false;
-            if (!_teachers.Contains(t)) { 
-                _teachers.Add(t);
-                canAddTeacher = true;
-            }
-            return canAddTeacher;
+            _teachers.Add(t);
+            return true;
         }
 
         // Note: to be updated because currently doesn't compare values of tasks, just compares location of task object in memory

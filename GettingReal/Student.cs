@@ -48,5 +48,7 @@ namespace MEG
             
             return "Student[FirstName=" + this.FirstName + ",LastName=" + this.LastName + "]";
         }
+
+  
     }
 }
