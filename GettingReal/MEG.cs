@@ -20,12 +20,12 @@ namespace MEG
             InitTeachers();
         }
 
-        public string ViewStudents(string classRoom) {
+        
 
-            //  return FindClassRoom(classRoom);
-            return "";
+        public string ViewStudents(string classRoom) {   
+            return GetClassRoom(classRoom).ViewStudents();
 
-         }
+        }
         private void InitTeachers()
         {
             CreateTeacher("alex01", "pass", "Alexander", "Hvidt", "alexander2341@gmail.com");
@@ -139,7 +139,10 @@ namespace MEG
                 if (FindClassRoom(classRoomName))
                 {
                     canAssignTeacher = GetClassRoom(classRoomName).AddTeacher(t);
+                    t.AddClassRoom(GetClassRoom(classRoomName));
                 }
+
+                
             }
             return canAssignTeacher;
         }
