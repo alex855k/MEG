@@ -12,13 +12,19 @@ namespace MEG
         private List<Teacher> _teachers = new List<Teacher>();
         private List<Student> _students = new List<Student>();
         private List<ClassRoom> _classRooms = new List<ClassRoom>();
-        public  List<IUser> _users = new List<IUser>();
+        public List<IUser> _users = new List<IUser>();
 
-        public MEGController() {
+        public MEGController()
+        {
             InitClassrooms();
             InitTeachers();
         }
 
+        //public string ViewStudents(string classRoom) {
+
+        //  //  return FindClassRoom(classRoom);
+
+        // }
         private void InitTeachers()
         {
             CreateTeacher("alex01", "pass", "Alexander", "Hvidt", "alexander2341@gmail.com");
@@ -29,7 +35,8 @@ namespace MEG
         public bool CreateTeacher(string un, string pw, string fn, string ln, string email)
         {
             bool canCreateTeacher = false;
-            if (!FindTeacher(email)){ 
+            if (!FindTeacher(email))
+            {
                 Teacher t = new Teacher(un, pw, fn, ln, email);
                 _teachers.Add(t);
                 _users.Add(t);
@@ -51,7 +58,8 @@ namespace MEG
         private bool FindTeacher(string email)
         {
             bool canFindTeacer = false;
-            foreach (Teacher t in _teachers) {
+            foreach (Teacher t in _teachers)
+            {
                 if (t.Email == email) canFindTeacer = true;
             }
             return canFindTeacer;
@@ -65,14 +73,15 @@ namespace MEG
             _classRooms.Add(new ClassRoom("1.A"));
             _classRooms.Add(new ClassRoom("2.A"));
             _classRooms.Add(new ClassRoom("3.A"));
-
         }
 
-        private ClassRoom GetClassRoom(string classRoom) {
+        private ClassRoom GetClassRoom(string classRoom)
+        {
 
             ClassRoom cr = new ClassRoom("");
-            foreach (ClassRoom c in _classRooms) {
-                if(classRoom == c.ClassName) cr = c; 
+            foreach (ClassRoom c in _classRooms)
+            {
+                if (classRoom == c.ClassName) cr = c;
             }
             return cr;
         }
@@ -90,7 +99,8 @@ namespace MEG
         public List<string> GetClassRoomNames()
         {
             List<string> rl = new List<string>();
-            foreach (ClassRoom c in _classRooms) {
+            foreach (ClassRoom c in _classRooms)
+            {
                 rl.Add(c.ClassName);
             }
             return rl;
@@ -98,69 +108,69 @@ namespace MEG
 
         public string Login(string un, string pw)
         {
-            foreach (IUser u in _users) {
-                if(u.Login(un, pw)) return u.UserType;
+            foreach (IUser u in _users)
+            {
+                if (u.Login(un, pw)) return u.UserType;
             }
-                return "";
+            return "";
         }
         public bool ClassRoomExists(string cr)
         {
             bool cond = false;
-            foreach (ClassRoom c in _classRooms) {
-                if (c.ClassName == cr) {
+            foreach (ClassRoom c in _classRooms)
+            {
+                if (c.ClassName == cr)
+                {
                     cond = true;
                 }
             }
             return cond;
         }
 
-        //redundant - to be removed
-        /*
-        private bool teacherIsAssignedToClassRoom(string cr, Teacher teacher) {
-
-            bool isAssigned = false;
-       
-            return isAssigned;
-        }
-        */
         public bool AssignTeacher(string email, string classRoomName)
         {
             bool canAssignTeacher = false;
 
-            if (this.FindTeacher(email)) {
+            if (this.FindTeacher(email))
+            {
                 Teacher t = GetTeacher(email);
 
-                if (FindClassRoom(classRoomName)) {
+                if (FindClassRoom(classRoomName))
+                {
                     canAssignTeacher = GetClassRoom(classRoomName).AddTeacher(t);
                 }
             }
             return canAssignTeacher;
         }
 
-        private Teacher GetTeacher(string email)
+        public Teacher GetTeacher(string email)
         {
-            Teacher teacher = new Teacher("", ""); 
-            foreach (Teacher t in _teachers) {
-                if (t.Email==email) {
+            Teacher teacher = new Teacher("", "");
+            foreach (Teacher t in _teachers)
+            {
+                if (t.Email == email)
+                {
                     teacher = t;
                 }
             }
             return teacher;
         }
 
-        public List<string> GetTeacherInfo() {
+        public List<string> GetTeacherInfo()
+        {
             List<string> teachers = new List<string>();
-            foreach(Teacher t in _teachers)
+            foreach (Teacher t in _teachers)
             {
                 teachers.Add(t.ToString());
             }
-            return teachers; 
+            return teachers;
         }
 
         public string GetUserType(string un)
         {
             string rs = "";
-            foreach (IUser u in _users) { 
+            foreach (IUser u in _users)
+            {
                 if (u.UserExists(un)) rs = u.UserType;
             }
             return rs;
@@ -179,14 +189,28 @@ namespace MEG
             return true;
         }
 
-        public void GetTeacherClassRooms(string username)
+        public List<string> GetClassRoomsTeacher(string username)
         {
-            /*
-            foreach (GetTeacher())
+            Teacher t = new Teacher("", "");
+            foreach (IUser u in _users)
             {
-
+                if (u.UserExists(username) && u.UserType == "Teacher")
+                {
+                    t = (Teacher)u;
+                }
             }
-            */
+
+            List<string> _returnlist = new List<string>();
+            foreach (ClassRoom c in _classRooms)
+            {
+                if (c.FindTeacher(t))
+                {
+                    _returnlist.Add(c.ClassName);
+                }
+            }
+            return _returnlist;
+
         }
+
     }
 }

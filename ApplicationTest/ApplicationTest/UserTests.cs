@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MEG;
-using System.Collections.Generic;
 
 namespace ApplicationTest
 {
@@ -13,26 +12,16 @@ namespace ApplicationTest
         public void CanCreateTeacher()
         {
             MEGController MC = new MEGController();
-            Assert.IsTrue(MC.CreateTeacher("mag123", "password", "Magrethe", "Pedersen", "magrethe23@gmail.com"));
-            //ITeacher t = new Teacher("mag123", "password", "Magrethe", "Pedersen", "magrethe23@gmail.com");
-            //Assert.AreEqual("Teacher[Username=mag123,Password=password,Firstname=Magrethe,LastName=Pedersen,Email=magrethe23@gmail.com]", t.ToString());
+            ITeacher t = new Teacher("mag123", "password", "Magrethe", "Pedersen", "magrther23@gmail.com");
+            Assert.AreEqual("Teacher[Username=username,Password=password,Firstname=Magrethe,LastName=Pedersen,Email=magrethe23@gmail.com]", t.ToString());
 
         }
 
-
+        
         [TestMethod]
-        public void CanAssignTeacherToClassRooms()
-        {
+        public void CanAssignTeacherToClassRooms() {
             MEGController MC = new MEGController();
-            MC.CreateTeacher("mag123", "password", "Magrethe", "Pedersen", "magrethe23@gmail.com");
-            Assert.IsTrue(MC.AssignTeacher("magrethe23@gmail.com", "1.B"));
-            Teacher testTeacher = MC.GetTeacher("magrethe23@gmail.com");
-            Assert.AreNotEqual(0, MC.GetClassRoom().Count);
-            Assert.AreNotEqual(0, testTeacher.getClassRooms().Count);
-            //for (int i = 0; i < testTeacher.getClassRooms().Count; i++)
-            //{
-            //    Assert.AreEqual("1.B", testTeacher.getClassRoomNames()[i]);
-            //}
+           // MC.AssignTeacher()
         }
 
         [TestMethod]
@@ -50,7 +39,7 @@ namespace ApplicationTest
         [TestMethod]
         public void StudentCanLogin()
         {
-
+           
         }
 
         [TestMethod]

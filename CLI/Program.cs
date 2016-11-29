@@ -47,13 +47,16 @@ namespace CLI
             }
             if (isLoggedIn)
             {
-                if(usertype=="Teacher")Console.WriteLine("4. CreateStudent()");
-                if(usertype == "Student")Console.WriteLine("4. CreateTask()");
-            }
-            if (isLoggedIn)
-            {
-                if (usertype == "Teacher") Console.WriteLine("5. CreateStudent()");
-                if (usertype == "Student") Console.WriteLine("5. CreateTask()");
+                if (usertype == "Teacher") {
+                        Console.WriteLine("4. CreateStudent()");   
+                        Console.WriteLine("5. ViewStudents()");
+                        Console.WriteLine("6. CreateTask()");
+                }
+                if (usertype == "Student")
+                {
+                        Console.WriteLine("5. NotImplemented()");
+                }
+      
             }
             Console.WriteLine("0. Close");
         }
@@ -123,8 +126,8 @@ namespace CLI
         {
             string un = "";
             Console.Clear();
-            bool canCreateTeacher = false;
-            while (!canCreateTeacher) { 
+            bool cantCreateTeacher = true;
+            while (cantCreateTeacher) { 
                 Console.WriteLine("Create a teacher:");
                 Console.WriteLine("Type a username: ");
                 un = Console.ReadLine();
@@ -136,7 +139,7 @@ namespace CLI
                 string ln = Console.ReadLine();
                 Console.WriteLine("Type your email: ");
                 string email = Console.ReadLine();
-                canCreateTeacher = MEGC.CreateTeacher(un, pw, fn, ln, email);
+                cantCreateTeacher = !MEGC.CreateTeacher(un, pw, fn, ln, email);
             }
             Console.WriteLine("How many classes are you teaching?");
             int nb;
@@ -156,12 +159,12 @@ namespace CLI
                 Console.WriteLine("\n" + s);
             }
             Console.WriteLine("Type the name of the class:");
-            bool canAssignTeacher = false;
+            bool cantAssignTeacher = true;
             string classRoomName = "";
-            while (!canAssignTeacher) {
+            while (cantAssignTeacher) {
                     classRoomName = Console.ReadLine();
-                    canAssignTeacher = MEGC.AssignTeacher(teacherUN, classRoomName);
-                    if(!canAssignTeacher) Console.WriteLine("Error: Either the teacher is already assigned to the class or the class doesn't exist try again.");
+                    cantAssignTeacher = !MEGC.AssignTeacher(teacherUN, classRoomName);
+                    if(!cantAssignTeacher) Console.WriteLine("Error: Either the teacher is already assigned to the class or the class doesn't exist try again.");
             }
             Console.WriteLine("Teacher assigned to class");
         }
@@ -171,27 +174,39 @@ namespace CLI
             string classSelection = "";
 
             Console.WriteLine("Select a class:");
-           /* MEGC.GetTeacherClassRooms(string username);
-            foreach () {
-                
+            
+            foreach (string c in MEGC.GetClassRoomsTeacher(username)) {
+                Console.WriteLine(c);    
             }
-            */
+            classSelection = Console.ReadLine();
             return classSelection; 
         }
 
         private void CreateStudent()
         {
-            Console.Clear();
-            Console.WriteLine("Create a student");
-            Console.WriteLine("Type the first name");
-            string fn = Console.ReadLine();
-            Console.WriteLine("Type the last name");
-            string ln = Console.ReadLine();
-            MEGC.CreateStudent(fn, ln, this.username);
-            Console.Clear();
-        }
+            bool couldntCreateStudent = true;
+            while (couldntCreateStudent) {
+                Console.Clear();
+                Console.WriteLine("Create a student");
+                Console.WriteLine("Type the first name");
+                string fn = Console.ReadLine();
+                Console.WriteLine("Type the last name");
+                string ln = Console.ReadLine();
+                Console.WriteLine("Type in the name of the class:");
+                string classRoom = SelectClass();
+                if (MEGC.CreateStudent(fn, ln, classRoom))
+                {
+                    Console.WriteLine("Student created");
 
-        
+                }
+                else {
+                    Console.WriteLine("Student wasn't created, try again.");
+                }
+                Console.WriteLine("Press enter to continue");
+                Console.ReadKey();
+            }
+
+        }
 
         private void Login()
         {
