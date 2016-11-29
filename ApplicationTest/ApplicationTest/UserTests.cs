@@ -17,12 +17,11 @@ namespace ApplicationTest
 
         }
 
-
+        
         [TestMethod]
-        public void CanAssignTeacherToClassRooms()
-        {
+        public void CanAssignTeacherToClassRooms() {
             MEGController MC = new MEGController();
-            // MC.AssignTeacher()
+           // MC.AssignTeacher()
         }
 
         [TestMethod]
@@ -40,7 +39,7 @@ namespace ApplicationTest
         [TestMethod]
         public void StudentCanLogin()
         {
-
+           
         }
 
         [TestMethod]

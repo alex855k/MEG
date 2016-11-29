@@ -65,7 +65,6 @@ namespace MEG
             _classRooms.Add(new ClassRoom("1.A"));
             _classRooms.Add(new ClassRoom("2.A"));
             _classRooms.Add(new ClassRoom("3.A"));
-
         }
 
         private ClassRoom GetClassRoom(string classRoom) {
@@ -179,14 +178,22 @@ namespace MEG
             return true;
         }
 
-        public void GetTeacherClassRooms(string username)
+        public List<string> GetClassRoomsTeacher(string username)
         {
-            /*
-            foreach (GetTeacher())
-            {
-
+            Teacher t = new Teacher("","");
+            foreach (IUser u in _users) {
+                if (u.UserExists(username) && u.UserType == "Teacher") {
+                    t = (Teacher)u;
+                }
             }
-            */
+
+            List<string> _returnlist = new List<string>();
+            foreach (ClassRoom c in _classRooms) {
+                if (c.FindTeacher(t)) {
+                    _returnlist.Add(c.ClassName);
+                }
+            }
+            return _returnlist;
         }
     }
 }

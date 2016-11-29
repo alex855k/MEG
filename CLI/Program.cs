@@ -171,11 +171,11 @@ namespace CLI
             string classSelection = "";
 
             Console.WriteLine("Select a class:");
-           /* MEGC.GetTeacherClassRooms(string username);
-            foreach () {
-                
+            
+            foreach (string c in MEGC.GetClassRoomsTeacher(username)) {
+                Console.WriteLine(c);    
             }
-            */
+            classSelection = Console.ReadLine();
             return classSelection; 
         }
 

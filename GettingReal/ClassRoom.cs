@@ -49,5 +49,9 @@ namespace MEG
             return canAddTask;
         }
 
+        public bool FindTeacher(Teacher t)
+        {
+            return _teachers.Contains(t);
+        }
     }
 }
