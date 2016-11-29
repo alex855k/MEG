@@ -149,8 +149,8 @@ namespace CLI
             }
             Console.Clear();
         }
+        
 
-        private void 
 
         private void AssignTeacher(string teacherUN)
         {
@@ -186,7 +186,10 @@ namespace CLI
         }
 
         public void ViewStudents() {
-            Console.WriteLine(MEGC.ViewStudents());
+
+            Console.WriteLine(MEGC.ViewStudents(this.SelectClass()));
+            Console.ReadKey();
+            Console.Clear();
         }
 
         private void CreateStudent()

@@ -14,7 +14,7 @@ namespace MEG
     public class Teacher : User, ITeacher, IUser
     {     
 
-        private List<ClassRoom> _classRooms = new List<ClassRoom>();
+        private SortedList<ClassRoom, List<Subject>> _classRooms = new SortedList<ClassRoom, List<Subject>>();
         public string Email { get; private set; }
 
 
@@ -32,7 +32,8 @@ namespace MEG
         }
 
         public void AddClassRoom(ClassRoom c) {
-            _classRooms.Add(c);
+           
+            _classRooms.Add(c, new List<Subject>());
         }
 
         public List<string> getClassRooms() {
