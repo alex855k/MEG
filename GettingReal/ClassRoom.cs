@@ -5,7 +5,12 @@ using System.Text;
 
 namespace MEG
 {
-    public class ClassRoom
+    public interface IClassRoom{
+        string ViewStudents();
+
+    }
+
+    public class ClassRoom : IClassRoom
     {
         public string ClassName { get; }
 
@@ -17,6 +22,7 @@ namespace MEG
         public ClassRoom(string cn) {
             this.ClassName = cn;
         }
+
 
         public string ViewStudents() {
             string rs = "\n--- Student --- ";
@@ -49,5 +55,9 @@ namespace MEG
             return canAddTask;
         }
 
+        public bool FindTeacher(Teacher t)
+        {
+            return _teachers.Contains(t);
+        }
     }
 }

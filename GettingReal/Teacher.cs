@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MEG
@@ -28,6 +29,11 @@ namespace MEG
         public Teacher(string fn, string ln) : base(fn,ln)
         {
 
+        }
+
+        public void AddClassRoom(ClassRoom c) {
+           
+            _classRooms.Add(c, new List<Subject>());
         }
 
         public List<string> getClassRooms() {
@@ -95,8 +101,8 @@ namespace MEG
         public List<string> getClassRoomNames()
         {
             List<string> sj = new List<string>();
-            foreach(var c in _classRooms.Keys) {
-                sj.Add(c.ClassName);
+                    foreach(var c in _classRooms.Keys) {
+                        sj.Add(c.ClassName);
                     }
             return sj;
         }
