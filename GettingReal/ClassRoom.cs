@@ -18,6 +18,7 @@ namespace MEG
         private List<Teacher> _teachers = new List<Teacher>();
         private List<Task> _tasks = new List<Task>();
 
+
         public ClassRoom(string cn) {
             this.ClassName = cn;
         }

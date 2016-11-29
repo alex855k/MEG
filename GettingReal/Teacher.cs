@@ -31,6 +31,11 @@ namespace MEG
 
         }
 
+        public void AddClassRoom(ClassRoom c) {
+           
+            _classRooms.Add(c, new List<Subject>());
+        }
+
         public List<string> getClassRooms() {
             List<string> rl = new List<string>();
             foreach(var c in _classRooms){

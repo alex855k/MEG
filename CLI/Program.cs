@@ -149,6 +149,8 @@ namespace CLI
             }
             Console.Clear();
         }
+        
+
 
         private void AssignTeacher(string teacherUN)
         {
@@ -162,6 +164,7 @@ namespace CLI
             bool cantAssignTeacher = true;
             string classRoomName = "";
             while (cantAssignTeacher) {
+                   
                     classRoomName = Console.ReadLine();
                     cantAssignTeacher = !MEGC.AssignTeacher(teacherUN, classRoomName);
                     if(!cantAssignTeacher) Console.WriteLine("Error: Either the teacher is already assigned to the class or the class doesn't exist try again.");
@@ -180,6 +183,13 @@ namespace CLI
             }
             classSelection = Console.ReadLine();
             return classSelection; 
+        }
+
+        public void ViewStudents() {
+
+            Console.WriteLine(MEGC.ViewStudents(this.SelectClass()));
+            Console.ReadKey();
+            Console.Clear();
         }
 
         private void CreateStudent()
