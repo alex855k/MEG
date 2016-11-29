@@ -22,7 +22,8 @@ namespace MEG
 
         public string ViewStudents(string classRoom) {
 
-          //  return FindClassRoom(classRoom);
+            //  return FindClassRoom(classRoom);
+            return "";
 
          }
         private void InitTeachers()
