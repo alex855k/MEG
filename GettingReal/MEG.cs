@@ -20,6 +20,11 @@ namespace MEG
             InitTeachers();
         }
 
+        public string ViewStudents(string classRoom) {
+
+          //  return FindClassRoom(classRoom);
+
+         }
         private void InitTeachers()
         {
             CreateTeacher("alex01", "pass", "Alexander", "Hvidt", "alexander2341@gmail.com");

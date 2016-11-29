@@ -13,5 +13,13 @@ namespace ApplicationTest
             m.CreateTeacher("alex", "pass", "Alexander", "Hvidt", "alexander@gmail.com");
             Assert.AreEqual(true, m.AssignTeacher("alexander@gmail.com", "1.B"));
         }
+
+        [TestMethod]
+        public void CanCreateStudent()
+        {
+            MEGController m = new MEGController();
+           // m.CreateTeacher("alex", "pass", "Alexander", "Hvidt", "alexander@gmail.com");
+            Assert.AreEqual(true, true);
+        }
     }
 }

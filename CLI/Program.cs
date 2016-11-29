@@ -47,13 +47,16 @@ namespace CLI
             }
             if (isLoggedIn)
             {
-                if(usertype=="Teacher")Console.WriteLine("4. CreateStudent()");
-                if(usertype == "Student")Console.WriteLine("4. CreateTask()");
-            }
-            if (isLoggedIn)
-            {
-                if (usertype == "Teacher") Console.WriteLine("5. CreateStudent()");
-                if (usertype == "Student") Console.WriteLine("5. CreateTask()");
+                if (usertype == "Teacher") {
+                        Console.WriteLine("4. CreateStudent()");   
+                        Console.WriteLine("5. ViewStudents()");
+                        Console.WriteLine("6. CreateTask()");
+                }
+                if (usertype == "Student")
+                {
+                        Console.WriteLine("5. NotImplemented()");
+                }
+      
             }
             Console.WriteLine("0. Close");
         }

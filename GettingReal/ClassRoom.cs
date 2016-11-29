@@ -23,6 +23,7 @@ namespace MEG
             this.ClassName = cn;
         }
 
+
         public string ViewStudents() {
             string rs = "\n--- Student --- ";
             foreach (Student s in _students) {
