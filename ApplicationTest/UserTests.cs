@@ -14,9 +14,7 @@ namespace ApplicationTest
             MEGController MC = new MEGController();
             ITeacher t = new Teacher("mag123", "password", "Magrethe", "Pedersen", "magrther23@gmail.com");
             Assert.AreEqual("Teacher[Username=username,Password=password,Firstname=Magrethe,LastName=Pedersen,Email=magrethe23@gmail.com]", t.ToString());
-
         }
-
 
         [TestMethod]
         public void CanAssignTeacherToClassRooms()

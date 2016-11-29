@@ -96,8 +96,8 @@ namespace MEG
         public List<string> getClassRoomNames()
         {
             List<string> sj = new List<string>();
-            foreach(var c in _classRooms.Keys) {
-                sj.Add(c.ClassName);
+                    foreach(var c in _classRooms.Keys) {
+                        sj.Add(c.ClassName);
                     }
             return sj;
         }

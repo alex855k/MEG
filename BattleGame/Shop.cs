@@ -15,6 +15,7 @@ namespace BattleGame
             this._inventory = inv; 
         }
 
+        /*
         public List<string> ViewInventory(){
             List<string> inventory = new List<string>();
             foreach (Equipment e in _inventory){
@@ -22,6 +23,7 @@ namespace BattleGame
             }
             return 
         }
+        */
 
     }
 }

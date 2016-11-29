@@ -5,7 +5,12 @@ using System.Text;
 
 namespace MEG
 {
-    public class ClassRoom
+    public interface IClassRoom{
+        string ViewStudents();
+
+    }
+
+    public class ClassRoom : IClassRoom
     {
         public string ClassName { get; }
 

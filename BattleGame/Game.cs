@@ -39,7 +39,7 @@ namespace BattleGame
         }
 
         public List<string> ViewShop() {
-            return string
+            return new List<string>();
         }
 
         /*

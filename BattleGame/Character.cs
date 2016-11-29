@@ -21,11 +21,11 @@ namespace BattleGame
 
         public float CalculateTotalHealth()
         {
-
+            return 1f;
         }
 
         public long CalculateTotalStrength() {
-            characterType.
+            
             return 1;
         }
 
@@ -34,7 +34,7 @@ namespace BattleGame
 
         }
 
-        public toString() {
+        public override string ToString() {
             return "Character[Level=" +this.Level+ "]";
         }
     }
