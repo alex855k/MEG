@@ -14,7 +14,7 @@ namespace MEG
     public class Teacher : User, ITeacher, IUser
     {     
 
-        private SortedList<ClassRoom, List<Subject>> _classRooms = new SortedList<ClassRoom, List<Subject>>();
+        private Dictionary<ClassRoom, List<Subject>> _classRooms = new Dictionary<ClassRoom, List<Subject>>();
         public string Email { get; private set; }
 
 
@@ -28,12 +28,14 @@ namespace MEG
 
         public Teacher(string fn, string ln) : base(fn,ln)
         {
-
+            this.FirstName = fn;
+            this.LastName = ln;
         }
 
         public void AddClassRoom(ClassRoom c) {
-           
-            _classRooms.Add(c, new List<Subject>());
+            List<Subject> s = new List<Subject>();
+            s.Add(Subject.Danish);
+            _classRooms.Add(c, s);
         }
 
         public List<string> getClassRooms() {
