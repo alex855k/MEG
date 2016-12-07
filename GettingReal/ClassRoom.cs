@@ -59,5 +59,36 @@ namespace MEG
         {
             return _teachers.Contains(t);
         }
+
+        public List<Task> ViewAllTasks()
+        {
+            return _tasks;
+        }
+
+        public List<Task> ViewOngoingTasks()
+        {
+            List<Task> _ongoingTasks = new List<Task>();
+            foreach(Task t in _tasks)
+            {
+                if(t.Status == TaskStatus.Ongoing)
+                {
+                    _ongoingTasks.Add(t);
+                }
+            }
+            return _ongoingTasks;
+        }
+
+        public List<Task> ViewCompletedTasks()
+        {
+            List<Task> _completedTasks = new List<Task>();
+            foreach (Task t in _tasks)
+            {
+                if (t.Status == TaskStatus.Completed)
+                {
+                    _completedTasks.Add(t);
+                }
+            }
+            return _completedTasks;
+        }
     }
 }

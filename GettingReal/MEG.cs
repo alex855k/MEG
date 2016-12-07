@@ -18,12 +18,14 @@ namespace MEG
         {
             InitClassrooms();
             InitTeachers();
+            Teacher t = new Teacher("Allan", "Heboe");
+           
         }
 
-        
-
-        public string ViewStudents(string classRoom) {   
-            return GetClassRoom(classRoom).ViewStudents();
+        public string ViewStudents(string classRoom) {
+            string rs = "";
+                if (FindClassRoom(classRoom)) rs = GetClassRoom(classRoom).ViewStudents();
+            return rs;
 
         }
         private void InitTeachers()
@@ -52,7 +54,9 @@ namespace MEG
             TaskType tasktype = (TaskType)Enum.Parse(typeof(TaskType), typeCapitalized);
             int studyPoints;
             int.TryParse(sp, out studyPoints);
-            Task newTask = new Task(description, tasktype, studyPoints);
+            TaskStatus taskstatus = TaskStatus.Ongoing;
+            Task newTask = new Task(description, tasktype, studyPoints, taskstatus);
+
         }
 
 
@@ -79,7 +83,7 @@ namespace MEG
         private ClassRoom GetClassRoom(string classRoom)
         {
 
-            ClassRoom cr = new ClassRoom("");
+            ClassRoom cr = null;
             foreach (ClassRoom c in _classRooms)
             {
                 if (classRoom == c.ClassName) cr = c;
@@ -135,14 +139,13 @@ namespace MEG
             if (this.FindTeacher(email))
             {
                 Teacher t = GetTeacher(email);
-
-                if (FindClassRoom(classRoomName))
-                {
-                    canAssignTeacher = GetClassRoom(classRoomName).AddTeacher(t);
-                    t.AddClassRoom(GetClassRoom(classRoomName));
+                ClassRoom c = GetClassRoom(classRoomName);
+                if (c!=null) { 
+                    t.AddClassRoom(c);
+                    c.AddTeacher(t);
+                    canAssignTeacher=true;
                 }
 
-                
             }
             return canAssignTeacher;
         }
@@ -187,9 +190,11 @@ namespace MEG
             Student s = new Student(fn, ln);
             _users.Add(s);
             _students.Add(s);
-            FindClassRoom(classRoom);
 
-            this.GetClassRoom(classRoom).AddStudent(s);
+            if (FindClassRoom(classRoom)) { 
+                this.GetClassRoom(classRoom).AddStudent(s);
+            }
+
             return true;
         }
 
