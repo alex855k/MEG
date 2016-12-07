@@ -9,6 +9,7 @@ namespace MEG
     {
         bool Login(string un, string password);
         string UserType { get; set;}
-        bool UserExists(string username);
+        bool CheckUsername(string username);
+        string Username { get; set; }
     }
 }

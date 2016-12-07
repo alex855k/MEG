@@ -8,7 +8,6 @@ namespace MEG
 {
     public class MEGController
     {
-
         private List<Teacher> _teachers = new List<Teacher>();
         private List<Student> _students = new List<Student>();
         private List<ClassRoom> _classRooms = new List<ClassRoom>();
@@ -18,20 +17,31 @@ namespace MEG
         {
             InitClassrooms();
             InitTeachers();
-            Teacher t = new Teacher("Allan", "Heboe");
-           
+            InitStudent();
         }
 
-        public string ViewStudents(string classRoom) {
+        private void InitStudent()
+        {
+            CreateStudent("Allan", "Heboe", "1.B");
+            CreateStudent("Bob", "Dylan", "2.B");
+            CreateStudent("Donald", "Trump", "2.B");
+            CreateStudent("Josef", "Stalin", "1.B");
+        }
+
+        public string ViewStudents(string c) {
             string rs = "";
-                if (FindClassRoom(classRoom)) rs = GetClassRoom(classRoom).ViewStudents();
+            rs = GetClassRoom(c).ViewStudents();
             return rs;
 
         }
         private void InitTeachers()
         {
             CreateTeacher("alex01", "pass", "Alexander", "Hvidt", "alexander2341@gmail.com");
+            AssignTeacher("alexander2341@gmail.com", "1.B");
+            AssignTeacher("alexander2341@gmail.com", "2.B");
             CreateTeacher("matt02", "pass", "Matthew", "Peterson", "blabla@blab.com");
+            AssignTeacher("blabla@blab.com", "2.C");
+            AssignTeacher("blabla@blab.com", "1.C");
             CreateTeacher("hedviga03", "pass", "Hedviga", "something", "dsaasdsdsad");
         }
 
@@ -48,13 +58,21 @@ namespace MEG
             return canCreateTeacher;
         }
 
-        public void CreateTask(string description, string type, string sp)
+        public void CreateTask(string description, string type, string studentPoint, string sp, string classRoom)
         {
+            bool canCreateTask = false;
+            if (this.FindClassRoom(classRoom)) {
+
+ 
             string typeCapitalized = type.First().ToString().ToUpper() + type.Substring(1);
             TaskType tasktype = (TaskType)Enum.Parse(typeof(TaskType), typeCapitalized);
             int studyPoints;
             int.TryParse(sp, out studyPoints);
-            Task newTask = new Task(description, tasktype, studyPoints);
+            TaskStatus taskstatus = TaskStatus.Ongoing;
+            Task newTask = new Task(description, tasktype, studyPoints, taskstatus);
+
+            }
+            return canCreateTask;
         }
 
 
@@ -176,7 +194,7 @@ namespace MEG
             string rs = "";
             foreach (IUser u in _users)
             {
-                if (u.UserExists(un)) rs = u.UserType;
+                if (u.CheckUsername(un)) rs = u.UserType;
             }
             return rs;
         }
@@ -201,7 +219,7 @@ namespace MEG
             Teacher t = new Teacher("", "");
             foreach (IUser u in _users)
             {
-                if (u.UserExists(username) && u.UserType == "Teacher")
+                if (u.CheckUsername(username) && u.UserType == "Teacher")
                 {
                     t = (Teacher)u;
                 }
@@ -219,5 +237,42 @@ namespace MEG
 
         }
 
+        public List<string> GetCurrentTasksFromClassroom(string classRoom)
+        {
+            List<string> rl = new List<string>();
+            if (FindClassRoom(classRoom))
+            {
+                string s = "\nTasks from";
+                //Needs a status
+                foreach (Task t in GetClassRoom(classRoom).GetTasks())
+                {
+                    s = "\n__________________\nDescription: " + t.Description;
+                    rl.Add(s);
+                    s = "\n__________________\nStudent Point Value: " + t.StudentPointValue;
+                }
+            }
+            return rl;
+        }
+        /*
+        public List<string> ViewCurrentTasks(string username)
+        {
+            List<string> rl = null;
+
+            if (u.UserExists(username) && u.UserType == "Teacher")
+            {
+                u
+            }
+            
+
+            return 
+        }
+        
+        public IUser GetUser(string username) {
+            foreach (IUser u in _users)
+            {
+                username
+            }
+        }
+        */
     }
 }

@@ -45,10 +45,12 @@ namespace MEG
 
         public override string ToString()
         {
-            
             return "Student[FirstName=" + this.FirstName + ",LastName=" + this.LastName + "]";
         }
 
-  
+        public string GetUsername()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

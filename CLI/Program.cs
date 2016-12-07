@@ -15,6 +15,8 @@ namespace CLI
         private bool running;
 
         private MEGController MEGC;
+        private string email;
+
         static void Main(string[] args)
         {
             Program pr = new Program();
@@ -47,19 +49,22 @@ namespace CLI
             }
             if (isLoggedIn)
             {
-                if (usertype == "Teacher") {
-                        Console.WriteLine("4. CreateStudent()");   
-                        Console.WriteLine("5. ViewStudents()");
-                        Console.WriteLine("6. CreateTask()");
+                if (usertype == "Teacher")
+                {
+                    Console.WriteLine("4. CreateStudent()");
+                    Console.WriteLine("5. ViewStudents()");
+                    Console.WriteLine("6. CreateTask()");
                 }
                 if (usertype == "Student")
                 {
-                        Console.WriteLine("5. NotImplemented()");
+                    Console.WriteLine("5. ViewTasks()");
                 }
-      
+
             }
-            Console.WriteLine("11. Login with a teacher user");
-            Console.WriteLine("12. Login with a student user");
+            else {
+                    Console.WriteLine("11. Quick login with premade teacher credentials");
+            }
+            
             Console.WriteLine("0. Close");
         }
 
@@ -78,10 +83,17 @@ namespace CLI
                     Console.WriteLine("Wrong input, try again.");
                     break;
                 case 11:
-                    LoginWithStudent();
+                    if (!isLoggedIn)
+                    {
+                        LoginWithTeacher();
+                    }
+                    else {
+                        Console.WriteLine("You are already logged in.");
+                    }
+                    
                     break;
                 case 12:
-                    LoginWithTeacher();
+                    Console.WriteLine("Not implemented");
                     break;
                 case 0:
                     running = false;
@@ -132,6 +144,7 @@ namespace CLI
             }
         }
 
+
         private void GetTeacherinfo()
         {
             foreach (string s in MEGC.GetTeacherInfo()) {
@@ -145,6 +158,7 @@ namespace CLI
             isLoggedIn = false;
             usertype = "";
             username = "";
+            email = "";
         }
 
         public void CreateTeacher()
@@ -203,11 +217,9 @@ namespace CLI
             string classSelection = "";
             List<string> _classRooms = MEGC.GetClassRoomsTeacher(username);
             Console.WriteLine("Select a class:");
-            int i = 0;
             foreach (string c in _classRooms)
             {
-                i++;
-                Console.WriteLine(i+". " + c);
+                Console.WriteLine(c);
             }
 
             classSelection = Console.ReadLine();
@@ -215,7 +227,6 @@ namespace CLI
         }
 
         public void ViewStudents() {
-
             Console.WriteLine(MEGC.ViewStudents(this.SelectClass()));
             Console.ReadKey();
             Console.Clear();
@@ -269,12 +280,19 @@ namespace CLI
             }
         }
 
-        private void LoginWithStudent() {
-            this.username = "alexander2341@gmail.com";
-        }
-
         private void LoginWithTeacher()
         {
+            this.username = "alex01";
+            this.email = "alexander2341@gmail.com";
+            this.usertype = "Teacher";
+            isLoggedIn = true;
+        }
+
+        private void ViewTasks()
+        {
+            foreach(string Task in MEGC.ViewTasks()) {
+
+            }
         }
     }
 }

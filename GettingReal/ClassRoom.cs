@@ -25,10 +25,11 @@ namespace MEG
 
 
         public string ViewStudents() {
-            string rs = "\n--- Student --- ";
+            string rs = "\n--- Students of "+this.ClassName+ " --- ";
             foreach (Student s in _students) {
                 rs += "\n Name: " + s.FirstName + " " + s.LastName;
                 rs += "\n Username: " + s.Username + "\n Password: " + s.Password;
+                rs += "\n______________________________";
             }
             return rs;
         }
@@ -58,6 +59,11 @@ namespace MEG
         public bool FindTeacher(Teacher t)
         {
             return _teachers.Contains(t);
+        }
+
+        public List<Task> GetTasks()
+        {
+            return _tasks;
         }
     }
 }
