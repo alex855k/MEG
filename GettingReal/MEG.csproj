@@ -47,7 +47,7 @@
     <Compile Include="MEG.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Task.cs" />
-    <Compile Include="TaskStatus.cs" />
+    <Compile Include="AssignmentStatus.cs" />
     <Compile Include="TaskType.cs" />
     <Compile Include="Teacher.cs" />
     <Compile Include="User.cs" />

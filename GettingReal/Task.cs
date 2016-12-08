@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using GettingReal;
 
 namespace MEG
 {
     public class Task
     {
-        public Task(string ds, TaskType type, int spv) {
+        private AssignmentStatus assignmentStatus;
+
+        public Task(string ds, TaskType type, int spv, AssignmentStatus status)
+        {
+            this.assignmentStatus = status;
             this.Description = ds;
             this.Type = type;
-            this.StudentPointValue = spv; 
+            this.StudentPointValue = spv;
         }
 
         public string Description { get; set;}

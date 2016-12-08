@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GettingReal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MEG
 {
@@ -68,8 +68,9 @@ namespace MEG
             TaskType tasktype = (TaskType)Enum.Parse(typeof(TaskType), typeCapitalized);
             int studyPoints;
             int.TryParse(sp, out studyPoints);
-            TaskStatus taskstatus = TaskStatus.Ongoing;
-            Task newTask = new Task(description, tasktype, studyPoints, taskstatus);
+                AssignmentStatus assignementStatus = AssignmentStatus.Ongoing;
+                ;
+                Task newTask = new Task(description, tasktype, studyPoints, assignementStatus);
 
             }
             return canCreateTask;

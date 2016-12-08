@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GettingReal
 {
-    public enum TaskStatus
+    public enum AssignmentStatus
     {
         Completed = 1,
         Ongoing = 2

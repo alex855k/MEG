@@ -17,20 +17,20 @@ namespace ApplicationTest
         }
 
 
-        [TestMethod]
-        public void CanAssignTeacherToClassRooms()
-        {
-            MEGController MC = new MEGController();
-            MC.CreateTeacher("mag123", "password", "Magrethe", "Pedersen", "magrethe23@gmail.com");
-            Assert.IsTrue(MC.AssignTeacher("magrethe23@gmail.com", "1.B"));
-            Teacher testTeacher = MC.GetTeacher("magrethe23@gmail.com"); //change the method in MEG to public
-            Assert.IsTrue(MC.GetClassRoom("1.B").FindTeacher(testTeacher)); //change the method in MEG to public
-            Assert.AreNotEqual(0, testTeacher.getClassRooms().Count);
-            for (int i = 0; i < testTeacher.getClassRooms().Count; i++)
-            {
-                Assert.AreEqual("1.B", testTeacher.getClassRoomNames()[i]);
-            }
-        }
+        //[TestMethod]
+        //public void CanAssignTeacherToClassRooms()
+        //{
+        //    MEGController MC = new MEGController();
+        //    MC.CreateTeacher("mag123", "password", "Magrethe", "Pedersen", "magrethe23@gmail.com");
+        //    Assert.IsTrue(MC.AssignTeacher("magrethe23@gmail.com", "1.B"));
+        //    Teacher testTeacher = MC.GetTeacher("magrethe23@gmail.com"); //change the method in MEG to public
+        //    Assert.IsTrue(MC.GetClassRoom("1.B").FindTeacher(testTeacher)); //change the method in MEG to public
+        //    Assert.AreNotEqual(0, testTeacher.getClassRooms().Count);
+        //    for (int i = 0; i < testTeacher.getClassRooms().Count; i++)
+        //    {
+        //        Assert.AreEqual("1.B", testTeacher.getClassRoomNames()[i]);
+        //    }
+        //}
 
         //[TestMethod]
         //public void TeacherCanCreateAndAssignStudent()
