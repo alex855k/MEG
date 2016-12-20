@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseFetchDataset.cs" />
+    <Compile Include="DB.cs" />
     <Compile Include="UserRep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

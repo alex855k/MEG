@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MEG
 {
-    public enum TaskType
+    public enum AssignmentType
     {
-        Assignment=1,
+        Handin=1,
         Homework=2,
         Questionnaire=3
     }

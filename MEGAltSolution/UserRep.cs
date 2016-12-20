@@ -26,7 +26,25 @@ namespace MEGAltSolution
         {
             return AddUser((IUser)s);
         }
+        /*
+        public bool SaveTeacher(Teacher t) {
+            DB.SaveUser(t);
+        }
 
+        public bool SaveStudent(Student s)
+        {
+            DB.SaveUser(s);
+        }
+
+        public bool LoadTeacher(string username) {
+            DB.Load()
+        }
+
+        public bool LoadStudent(string username)
+        {
+            DB.Load()
+        }
+        */
         private bool AddUser(IUser u) 
         {
             bool canAddUser = false;

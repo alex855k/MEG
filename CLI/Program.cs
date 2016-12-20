@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MEG;
+using System.Globalization;
+using MEGAltSolution;
 
 namespace CLI
 {
@@ -13,9 +12,9 @@ namespace CLI
         private string usertype;
         private bool isLoggedIn = false;
         private bool running;
-
-        private MEGController MEGC;
-        private string email;
+        private string email = "";
+        private MEGController MEGC  = new MEGController();
+        private DBConnectionDatasets database = new DBConnectionDatasets();
 
         static void Main(string[] args)
         {
@@ -24,11 +23,12 @@ namespace CLI
         }
 
         public void Run() {
-            MEGC = new MEGController();
             running = true;
+           
             
             while (running) {
                 ShowMenu();
+                database.FetchTeachers();
             }
         }
 
@@ -54,6 +54,7 @@ namespace CLI
                     Console.WriteLine("4. CreateStudent()");
                     Console.WriteLine("5. ViewStudents()");
                     Console.WriteLine("6. CreateTask()");
+                    Console.WriteLine("7. ViewTasks()");
                 }
                 if (usertype == "Student")
                 {
@@ -95,7 +96,7 @@ namespace CLI
                 case 12:
                     Console.WriteLine("Not implemented");
                     break;
-                case 0:
+                case -1:
                     running = false;
                     break;
                 case 1:
@@ -141,9 +142,125 @@ namespace CLI
                         }
                     }
                     break;
+                case 6:
+                    if (isLoggedIn)
+                    {
+                        if (usertype == "Teacher")
+                        {
+                            Console.Clear();
+                            CreateTask();
+                        }
+                        if (usertype == "Student")
+                        {
+                            Console.Clear();
+                        }
+                    }
+                    break;
+                case 7: database.FetchTeachers();
+                        Console.ReadLine(); 
+                    break;
             }
         }
 
+        private void PrintHeadline(string headline) {
+            Console.WriteLine("*-------------- "+ headline + " ---------------*");
+
+        }
+
+        private DateTime SetDate() {
+            string dateString= Console.ReadLine();
+            DateTime dDate;
+            if (DateTime.TryParse(dateString, out dDate) && (DateTime.Compare(dDate, DateTime.Today) <0))
+            {
+                return dDate;
+            }
+            else
+            {
+                Console.WriteLine("Invalid date format or the date is before todays date, try again");
+                return SetDate();
+            }
+        }
+
+        private void CreateTask()
+        {
+            int sp;
+            string description;
+            string classroom;
+            string type;
+            DateTime endTime;
+
+            Console.Clear();
+            PrintHeadline("Create an assignment for the students");
+            classroom = this.SelectClass();
+            sp = this.SelectStudentPointValue();
+            type = this.SelectTypeOfAssignment();
+
+            Console.WriteLine("Write a description of the assignment: ");
+            description = Console.ReadLine();
+
+            Console.WriteLine("Write an enddate format: YYYY/MM/DD");
+            endTime = SetDate();
+
+            if (!MEGC.CreateTask(description, type, username, sp, classroom, endTime))
+            {
+                Console.WriteLine("Wrong input try again from the beginning");
+                CreateTask();
+            }
+           
+
+            Console.WriteLine("Task created");
+            Console.ReadKey();
+        }
+
+        private string ToTitleCase(string str)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
+        }
+
+        private string SelectTypeOfAssignment()
+        {
+            string assignmentType = "";
+            Console.WriteLine("The three different types of assignments are homework, questionaire:");
+            Console.WriteLine("What type of assignment are you creating?");
+            do {
+                assignmentType = Console.ReadLine();
+                assignmentType.ToLower();
+                assignmentType = this.ToTitleCase(assignmentType);             
+            }
+            while (("Handin" != assignmentType)
+                && ("Homework" != assignmentType)
+                && ("Questionnaire" != assignmentType));
+            
+            
+            return assignmentType;
+        }
+
+        private void TaskTypes() {
+            Console.WriteLine();
+        }
+
+        private int SelectStudentPointValue() {
+            bool validInput = false;
+            int input = 0;
+      
+            Console.WriteLine("Select a fixed student point value, by entering the numerial value on the left of the option: ");
+            Console.WriteLine("1. 10");
+            Console.WriteLine("2. 20");
+            Console.WriteLine("3. 30");
+            Console.WriteLine("4. 40");
+            Console.WriteLine("5. 50");
+
+            while (!validInput) {   
+                int.TryParse(Console.ReadLine(), out input);
+                if ((input > 0) && (input <= 5)) {
+                    validInput = true;
+                } else {
+                    Console.WriteLine("Invalid input try again.");
+                }
+            }
+            return input*10;
+
+        }
 
         private void GetTeacherinfo()
         {
@@ -167,7 +284,7 @@ namespace CLI
             Console.Clear();
             bool cantCreateTeacher = true;
             while (cantCreateTeacher) { 
-                Console.WriteLine("Create a teacher:");
+                PrintHeadline("Create a teacher");
                 Console.WriteLine("Type a username: ");
                 string un = Console.ReadLine();
                 Console.WriteLine("Type a password: ");
@@ -263,7 +380,7 @@ namespace CLI
             Console.WriteLine("--- Login ---");
             Console.WriteLine("Type your username: ");
             string un = Console.ReadLine();
-            Console.WriteLine("Type your password: ");
+            Console.WriteLine("Type your password: ");   
             string pw = Console.ReadLine();
             if (!(MEGC.Login(un, pw) == ""))
             {
@@ -290,9 +407,8 @@ namespace CLI
 
         private void ViewTasks()
         {
-            foreach(string Task in MEGC.ViewTasks()) {
-
-            }
+            PrintHeadline("View tasks for a specific class");
+            this.SelectClass();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MEG
 
     public class Student : User, IStudent, IUser
     {
-
+        public ClassRoom currentClassRoom { get; set; } 
         private int studentPoints;
         private int studentCreationNumber;
 
@@ -30,7 +30,6 @@ namespace MEG
 
         private string CreateUserName()
         {
-            // to be updated
             return FirstName + studentCreationNumber;
         }
 
@@ -48,9 +47,21 @@ namespace MEG
             return "Student[FirstName=" + this.FirstName + ",LastName=" + this.LastName + "]";
         }
 
-        public string GetUsername()
+        public bool SpentStudentPoint(int amount)
         {
-            throw new NotImplementedException();
+            if (this.studentPoints >= amount) {
+                this.studentPoints = studentPoints - amount;
+                return true;
+            }
+            return false;
         }
+
+        public void AddStudentPoints(int amount)
+        {
+            this.studentPoints =+ amount;
+        }
+
+
+         
     }
 }

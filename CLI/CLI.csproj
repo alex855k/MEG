@@ -58,6 +58,10 @@
       <Project>{ec322418-28af-46b0-82b1-1edd249bc209}</Project>
       <Name>MEG</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MEGAltSolution\MEGAltSolution.csproj">
+      <Project>{15ad04ed-052d-4eae-86c8-6493a88d3340}</Project>
+      <Name>MEGAltSolution</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

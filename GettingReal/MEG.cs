@@ -58,20 +58,16 @@ namespace MEG
             return canCreateTeacher;
         }
 
-        public void CreateTask(string description, string type, string studentPoint, string sp, string classRoom)
+        public bool CreateTask(string description, string type, string username, int sp, string classRoom, DateTime endTime)
         {
             bool canCreateTask = false;
             if (this.FindClassRoom(classRoom)) {
-
- 
-            string typeCapitalized = type.First().ToString().ToUpper() + type.Substring(1);
-            TaskType tasktype = (TaskType)Enum.Parse(typeof(TaskType), typeCapitalized);
-            int studyPoints;
-            int.TryParse(sp, out studyPoints);
+                string typeCapitalized = type.First().ToString().ToUpper() + type.Substring(1);
+                AssignmentType tasktype = (AssignmentType)Enum.Parse(typeof(AssignmentType), typeCapitalized);
                 AssignmentStatus assignementStatus = AssignmentStatus.Ongoing;
-                ;
-                Task newTask = new Task(description, tasktype, studyPoints, assignementStatus);
-
+                Assignment newTask = new Assignment(description, tasktype, sp, assignementStatus, username, endTime);
+                GetClassRoom(classRoom).AddTask(newTask);
+                canCreateTask = true;
             }
             return canCreateTask;
         }
@@ -245,35 +241,29 @@ namespace MEG
             {
                 string s = "\nTasks from";
                 //Needs a status
-                foreach (Task t in GetClassRoom(classRoom).GetTasks())
+              /*  foreach (Assignment t in GetClassRoom(classRoom).GetTasks())
                 {
-                    s = "\n__________________\nDescription: " + t.Description;
-                    rl.Add(s);
-                    s = "\n__________________\nStudent Point Value: " + t.StudentPointValue;
+      
                 }
+                */
             }
             return rl;
         }
-        /*
-        public List<string> ViewCurrentTasks(string username)
-        {
-            List<string> rl = null;
+        //public List<string> ViewCurrentTasks(string classRoom)
+        //{
+        //    List<string> rl = null;
 
-            if (u.UserExists(username) && u.UserType == "Teacher")
-            {
-                u
-            }
+           
             
 
-            return 
-        }
+        //    return 
+        //}
         
-        public IUser GetUser(string username) {
-            foreach (IUser u in _users)
-            {
-                username
-            }
-        }
-        */
+        //public IUser GetUser(string username) {
+        //    foreach (IUser u in _users)
+        //    {
+        //        username
+        //    }
+        //}
     }
 }
