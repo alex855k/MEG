@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MEG;
+using System.Globalization;
+using MEGAltSolution;
+using System.Linq;
 
 namespace CLI
 {
@@ -13,8 +13,9 @@ namespace CLI
         private string usertype;
         private bool isLoggedIn = false;
         private bool running;
+        private string email = "";
+        private MEGController MEGC  = new MEGController();
 
-        private MEGController MEGC;
         static void Main(string[] args)
         {
             Program pr = new Program();
@@ -22,8 +23,8 @@ namespace CLI
         }
 
         public void Run() {
-            MEGC = new MEGController();
             running = true;
+           
             
             while (running) {
                 ShowMenu();
@@ -47,19 +48,23 @@ namespace CLI
             }
             if (isLoggedIn)
             {
-                if (usertype == "Teacher") {
-                        Console.WriteLine("4. CreateStudent()");   
-                        Console.WriteLine("5. ViewStudents()");
-                        Console.WriteLine("6. CreateTask()");
+                if (usertype == "Teacher")
+                {
+                    Console.WriteLine("4. CreateStudent()");
+                    Console.WriteLine("5. ViewStudents()");
+                    Console.WriteLine("6. CreateTask()");
+                    Console.WriteLine("7. ViewTasks()");
                 }
                 if (usertype == "Student")
                 {
-                        Console.WriteLine("5. NotImplemented()");
+                    Console.WriteLine("5. ViewTasks()");
                 }
-      
+
             }
-            Console.WriteLine("11. Login with a teacher user");
-            Console.WriteLine("12. Login with a student user");
+            else {
+                    Console.WriteLine("11. Quick login with premade teacher credentials");
+            }
+            
             Console.WriteLine("0. Close");
         }
 
@@ -72,18 +77,26 @@ namespace CLI
 
         private void MenuSelectOption(int opt)
         {
+            Console.Clear();
             switch (opt)
             {
                 default:
                     Console.WriteLine("Wrong input, try again.");
                     break;
                 case 11:
-                    LoginWithStudent();
+                    if (!isLoggedIn)
+                    {
+                        LoginWithTeacher();
+                    }
+                    else {
+                        Console.WriteLine("You are already logged in.");
+                    }
+                    
                     break;
                 case 12:
-                    LoginWithTeacher();
+                    Console.WriteLine("Not implemented");
                     break;
-                case 0:
+                case -1:
                     running = false;
                     break;
                 case 1:
@@ -106,12 +119,11 @@ namespace CLI
                 case 4:
                     if (isLoggedIn) {
                         if (usertype == "Teacher") {
-                            Console.Clear();
                             CreateStudent();
                         }
                         if (usertype == "Student")
                         {
-                            Console.Clear(); 
+  
                         }
                     }
                     break;
@@ -120,16 +132,139 @@ namespace CLI
                     {
                         if (usertype == "Teacher")
                         {
-                            Console.Clear();
                             ViewStudents();
                         }
                         if (usertype == "Student")
                         {
-                            Console.Clear();
+                            ViewTasks();
                         }
                     }
                     break;
+                case 6:
+                    if (isLoggedIn)
+                    {
+                        if (usertype == "Teacher")
+                        {
+                            CreateTask();
+                        }
+                        if (usertype == "Student")
+                        {
+                        }
+                    }
+                    break;
+                case 7:
+                    ViewTasks();
+                        //database.FetchTeachers();      
+                    break;
+                case 0:
+                    running = false;
+                    break;
+
             }
+            Console.ReadLine();
+        }
+
+        private void PrintHeadline(string headline) {
+            Console.WriteLine("*-------------- "+ headline + " ---------------*");
+
+        }
+
+        private DateTime SetDate() {
+            string dateString= Console.ReadLine();
+            string format = "yyyy/dd/MM";
+            DateTime dDate;
+            if (DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dDate) && (DateTime.Compare(dDate, DateTime.Today) > 0))
+            {
+                return dDate;
+            }
+            else
+            {
+                Console.WriteLine("Invalid date format or the date is before today's date, try again");
+                return SetDate();
+            }
+        }
+
+        private void CreateTask()
+        {
+            int sp;
+            string description;
+            string classroom;
+            string type;
+            string name;
+            DateTime endTime;
+
+            Console.Clear();
+
+            Console.WriteLine("Write a name for the task:");
+            name = Console.ReadLine();
+            PrintHeadline("Create an assignment for the students");
+            classroom = this.SelectClass();
+            sp = this.SelectStudentPointValue();
+            type = this.SelectTypeOfAssignment();
+
+            Console.WriteLine("Write a description of the assignment: ");
+            description = Console.ReadLine();
+
+            Console.WriteLine("Write an enddate format: YYYY/DD/MM");
+            endTime = SetDate();
+
+            if (!MEGC.CreateTask(name, description, type, username, sp, classroom, endTime))
+            {
+                Console.WriteLine("Wrong input try again from the beginning");
+                Console.ReadKey();
+                CreateTask();
+            }
+
+        }
+
+        private string ToTitleCase(string str)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
+        }
+
+        private string SelectTypeOfAssignment()
+        {
+            string assignmentType = "";
+            Console.WriteLine("The three different types of assignments are homework, questionaire and handin:");
+            Console.WriteLine("What type of assignment are you creating?");
+            do {
+                assignmentType = Console.ReadLine();
+                assignmentType.ToLower();
+                assignmentType = this.ToTitleCase(assignmentType);             
+            }
+            while (("Handin" != assignmentType)
+                && ("Homework" != assignmentType)
+                && ("Questionnaire" != assignmentType));
+            
+            
+            return assignmentType;
+        }
+
+        private void TaskTypes() {
+            Console.WriteLine();
+        }
+
+        private int SelectStudentPointValue() {
+            bool validInput = false;
+            int input = 0;
+      
+            Console.WriteLine("Select a fixed student point value, by entering the numeral value on the left of the option: ");
+            Console.WriteLine("1. 10");
+            Console.WriteLine("2. 20");
+            Console.WriteLine("3. 30");
+            Console.WriteLine("4. 40");
+            Console.WriteLine("5. 50");
+
+            while (!validInput) {   
+                int.TryParse(Console.ReadLine(), out input);
+                if ((input > 0) && (input <= 5)) {
+                    validInput = true;
+                } else {
+                    Console.WriteLine("Invalid input try again.");
+                }
+            }
+            return input*10;
+
         }
 
         private void GetTeacherinfo()
@@ -145,6 +280,7 @@ namespace CLI
             isLoggedIn = false;
             usertype = "";
             username = "";
+            email = "";
         }
 
         public void CreateTeacher()
@@ -153,7 +289,7 @@ namespace CLI
             Console.Clear();
             bool cantCreateTeacher = true;
             while (cantCreateTeacher) { 
-                Console.WriteLine("Create a teacher:");
+                PrintHeadline("Create a teacher");
                 Console.WriteLine("Type a username: ");
                 string un = Console.ReadLine();
                 Console.WriteLine("Type a password: ");
@@ -203,19 +339,18 @@ namespace CLI
             string classSelection = "";
             List<string> _classRooms = MEGC.GetClassRoomsTeacher(username);
             Console.WriteLine("Select a class:");
-            int i = 0;
             foreach (string c in _classRooms)
             {
-                i++;
-                Console.WriteLine(i+". " + c);
+                Console.WriteLine(c);
             }
 
             classSelection = Console.ReadLine();
-            return classSelection; 
+            //string classCapitalized = classSelection.First().ToString().ToUpper() + type.Substring(2);
+            string classCapitalized = classSelection.ToUpper();
+            return classCapitalized; 
         }
 
         public void ViewStudents() {
-
             Console.WriteLine(MEGC.ViewStudents(this.SelectClass()));
             Console.ReadKey();
             Console.Clear();
@@ -252,7 +387,7 @@ namespace CLI
             Console.WriteLine("--- Login ---");
             Console.WriteLine("Type your username: ");
             string un = Console.ReadLine();
-            Console.WriteLine("Type your password: ");
+            Console.WriteLine("Type your password: ");   
             string pw = Console.ReadLine();
             if (!(MEGC.Login(un, pw) == ""))
             {
@@ -269,12 +404,18 @@ namespace CLI
             }
         }
 
-        private void LoginWithStudent() {
-            this.username = "alexander2341@gmail.com";
-        }
-
         private void LoginWithTeacher()
         {
+            this.username = "alex01";
+            this.email = "alexander2341@gmail.com";
+            this.usertype = "Teacher";
+            isLoggedIn = true;
+        }
+
+        private void ViewTasks()
+        {
+            PrintHeadline("View tasks for a specific class");
+            this.SelectClass();
         }
     }
 }

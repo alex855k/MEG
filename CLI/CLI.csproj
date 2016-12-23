@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserCredentials.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -56,6 +57,10 @@
     <ProjectReference Include="..\GettingReal\MEG.csproj">
       <Project>{ec322418-28af-46b0-82b1-1edd249bc209}</Project>
       <Name>MEG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MEGAltSolution\MEGAltSolution.csproj">
+      <Project>{15ad04ed-052d-4eae-86c8-6493a88d3340}</Project>
+      <Name>MEGAltSolution</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

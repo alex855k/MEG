@@ -54,10 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BattleGame\BattleGame.csproj">
-      <Project>{2c94dcc9-9c75-4c71-98c0-266f6498a8f0}</Project>
-      <Name>BattleGame</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GettingReal\MEG.csproj">
       <Project>{ec322418-28af-46b0-82b1-1edd249bc209}</Project>
       <Name>MEG</Name>

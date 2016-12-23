@@ -27,7 +27,7 @@ namespace MEG
             return canLogin;
         }
 
-        public bool UserExists(string username)
+        public bool CheckUsername(string username)
         {
             if (username == this.Username) return true;
             return false;

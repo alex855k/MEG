@@ -16,7 +16,7 @@ namespace MEG
 
         private List<Student> _students = new List<Student>();
         private List<Teacher> _teachers = new List<Teacher>();
-        private List<Task> _tasks = new List<Task>();
+        private List<Assignment> _assignments = new List<Assignment>();
 
 
         public ClassRoom(string cn) {
@@ -25,10 +25,11 @@ namespace MEG
 
 
         public string ViewStudents() {
-            string rs = "\n--- Student --- ";
+            string rs = "\n--- Students of "+this.ClassName+ " --- ";
             foreach (Student s in _students) {
                 rs += "\n Name: " + s.FirstName + " " + s.LastName;
                 rs += "\n Username: " + s.Username + "\n Password: " + s.Password;
+                rs += "\n______________________________";
             }
             return rs;
         }
@@ -44,14 +45,24 @@ namespace MEG
             return true;
         }
 
-        // Note: to be updated because currently doesn't compare values of tasks, just compares location of task object in memory
-        public bool AddTask(Task task)
-        {
-            bool canAddTask = false;
-            if (!_tasks.Contains(task)) { 
 
-                _tasks.Add(task);
+        public bool AddTask(Assignment task)
+        {
+            //Console.WriteLine("AddTask didn't exit");
+            //Console.ReadLine();
+
+            bool canAddTask = false;
+            if (!_assignments.Contains(task)) {
+                try
+                {
+                    _assignments.Add(task);
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e);
+                }
             }
+            
+            
             return canAddTask;
         }
 
@@ -60,35 +71,18 @@ namespace MEG
             return _teachers.Contains(t);
         }
 
-        public List<Task> ViewAllTasks()
+        public List<Assignment> GeAllTasks()
         {
-            return _tasks;
+            return _assignments;
         }
 
-        public List<Task> ViewOngoingTasks()
+        public List<Assignment> GetCompletedTasks()
         {
-            List<Task> _ongoingTasks = new List<Task>();
-            foreach(Task t in _tasks)
-            {
-                if(t.Status == TaskStatus.Ongoing)
-                {
-                    _ongoingTasks.Add(t);
-                }
+            List<Assignment> _rl = new List<Assignment>();
+            foreach(Assignment a in _rl) {
+                
             }
-            return _ongoingTasks;
-        }
-
-        public List<Task> ViewCompletedTasks()
-        {
-            List<Task> _completedTasks = new List<Task>();
-            foreach (Task t in _tasks)
-            {
-                if (t.Status == TaskStatus.Completed)
-                {
-                    _completedTasks.Add(t);
-                }
-            }
-            return _completedTasks;
+            return _rl;
         }
     }
 }

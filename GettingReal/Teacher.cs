@@ -7,7 +7,7 @@ namespace MEG
 {
     public interface ITeacher {
         void CreateStudent(string cn, string fn, string ln);
-        bool CreateTask(string className, Subject subject, string description, int studentPointValue, TaskType taskType);
+        bool CreateTask(string className, Subject subject, string description, int studentPointValue, AssignmentType taskType);
         string ToString();
     }
 
@@ -109,7 +109,7 @@ namespace MEG
             return sj;
         }
 
-        public bool CreateTask(string className, Subject subject, string description, int studentPointValue, TaskType type)
+        public bool CreateTask(string className, Subject subject, string description, int studentPointValue, AssignmentType type)
         {
             foreach(var c in _classRooms) {
                 if (c.Key.ClassName == className) {
