@@ -14,7 +14,6 @@ namespace CLI
         private bool running;
         private string email = "";
         private MEGController MEGC  = new MEGController();
-        private DBConnectionDatasets database = new DBConnectionDatasets();
 
         static void Main(string[] args)
         {
@@ -28,7 +27,6 @@ namespace CLI
             
             while (running) {
                 ShowMenu();
-                database.FetchTeachers();
             }
         }
 
@@ -78,6 +76,7 @@ namespace CLI
 
         private void MenuSelectOption(int opt)
         {
+            Console.Clear();
             switch (opt)
             {
                 default:
@@ -119,12 +118,11 @@ namespace CLI
                 case 4:
                     if (isLoggedIn) {
                         if (usertype == "Teacher") {
-                            Console.Clear();
                             CreateStudent();
                         }
                         if (usertype == "Student")
                         {
-                            Console.Clear(); 
+  
                         }
                     }
                     break;
@@ -133,12 +131,11 @@ namespace CLI
                     {
                         if (usertype == "Teacher")
                         {
-                            Console.Clear();
                             ViewStudents();
                         }
                         if (usertype == "Student")
                         {
-                            Console.Clear();
+                            ViewTasks();
                         }
                     }
                     break;
@@ -147,19 +144,20 @@ namespace CLI
                     {
                         if (usertype == "Teacher")
                         {
-                            Console.Clear();
                             CreateTask();
                         }
                         if (usertype == "Student")
                         {
-                            Console.Clear();
                         }
                     }
                     break;
-                case 7: database.FetchTeachers();
-                        Console.ReadLine(); 
-                    break;
+                case 7:
+                    ViewTasks();
+                        //database.FetchTeachers();      
+                        break;
+
             }
+            Console.ReadLine();
         }
 
         private void PrintHeadline(string headline) {
@@ -187,9 +185,13 @@ namespace CLI
             string description;
             string classroom;
             string type;
+            string name;
             DateTime endTime;
 
             Console.Clear();
+
+            Console.WriteLine("Write a name for the task:");
+            name = Console.ReadLine();
             PrintHeadline("Create an assignment for the students");
             classroom = this.SelectClass();
             sp = this.SelectStudentPointValue();
@@ -201,15 +203,12 @@ namespace CLI
             Console.WriteLine("Write an enddate format: YYYY/MM/DD");
             endTime = SetDate();
 
-            if (!MEGC.CreateTask(description, type, username, sp, classroom, endTime))
+            if (!MEGC.CreateTask(name, description, type, username, sp, classroom, endTime))
             {
                 Console.WriteLine("Wrong input try again from the beginning");
                 CreateTask();
             }
-           
 
-            Console.WriteLine("Task created");
-            Console.ReadKey();
         }
 
         private string ToTitleCase(string str)

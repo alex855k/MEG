@@ -48,11 +48,21 @@ namespace MEG
 
         public bool AddTask(Assignment task)
         {
-            bool canAddTask = false;
-            if (!_assignments.Contains(task)) { 
+            Console.WriteLine("AddTask didn't exit");
+            Console.ReadLine();
 
-                _assignments.Add(task);
+            bool canAddTask = false;
+            if (!_assignments.Contains(task)) {
+                try
+                {
+                    _assignments.Add(task);
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e);
+                }
             }
+            
+            
             return canAddTask;
         }
 

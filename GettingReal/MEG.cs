@@ -58,16 +58,22 @@ namespace MEG
             return canCreateTeacher;
         }
 
-        public bool CreateTask(string description, string type, string username, int sp, string classRoom, DateTime endTime)
+        public bool CreateTask(string name, string description, string type, string username, int sp, string classRoom, DateTime endTime)
         {
             bool canCreateTask = false;
             if (this.FindClassRoom(classRoom)) {
                 string typeCapitalized = type.First().ToString().ToUpper() + type.Substring(1);
+            
                 AssignmentType tasktype = (AssignmentType)Enum.Parse(typeof(AssignmentType), typeCapitalized);
+           
                 AssignmentStatus assignementStatus = AssignmentStatus.Ongoing;
-                Assignment newTask = new Assignment(description, tasktype, sp, assignementStatus, username, endTime);
+              
+                Assignment newTask = new Assignment(name, description, tasktype, sp, assignementStatus, username, endTime);
+                
+                
                 GetClassRoom(classRoom).AddTask(newTask);
                 canCreateTask = true;
+               
             }
             return canCreateTask;
         }
@@ -233,6 +239,7 @@ namespace MEG
             return _returnlist;
 
         }
+
 
         public List<string> GetCurrentTasksFromClassroom(string classRoom)
         {

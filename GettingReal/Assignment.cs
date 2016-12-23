@@ -15,7 +15,7 @@ namespace MEG
         private int sp;
         private AssignmentStatus assignementStatus;
         private string username;
-
+        
         public Assignment(string name,string ds, AssignmentType type, int spv, AssignmentStatus status, string creator, DateTime endTime)
         {
             this.assignmentStatus = status;
@@ -25,16 +25,6 @@ namespace MEG
             this.CreatedBy = creator;
             this.EndTime = endTime;
             this.startTime = DateTime.Today;
-        }
-
-        public Assignment(string description, AssignmentType tasktype, int sp, AssignmentStatus assignementStatus, string username, DateTime endTime)
-        {
-            Description = description;
-            this.tasktype = tasktype;
-            this.sp = sp;
-            this.assignementStatus = assignementStatus;
-            this.username = username;
-            EndTime = endTime;
         }
 
         public override string ToString() {

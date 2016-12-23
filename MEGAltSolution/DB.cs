@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MEG;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,32 +19,35 @@ namespace MEGAltSolution
         string fetchStudentsQuery = "SELECT * FROM Studets";
         int inc = 0;
 
-        SqlDataAdapter da_1;
-
-        public DBConnectionDatasets() {
-                
-        }
-
-        public void FetchTeachers()
-        {
+        public void AssignTeacher(Teacher t) {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-                    da_1 = new SqlDataAdapter(fetchTeachersQuery, connection);
-                    DataSet ds = new DataSet();
-                    da_1.Fill(ds);
-                    foreach (DataTable table in ds.Tables)
+
+                    using (SqlConnection conn = new SqlConnection(connectionString))
                     {
-                        foreach (DataRow dr in table.Rows)
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand("InsertIntoTeacher", conn);
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@TeacherUsername", t.Username));
+
+
+                        // execute the command
+                        try
                         {
-                            Console.WriteLine("___TEACHER ROW" + dr.ItemArray.GetValue(1).ToString() + "___");
-                            Console.WriteLine(dr.ItemArray.GetValue(1).ToString());
-                            Console.WriteLine(dr.ItemArray.GetValue(2).ToString());
-                            Console.WriteLine(dr.ItemArray.GetValue(3).ToString());
-                            Console.WriteLine(dr.ItemArray.GetValue(4).ToString());
+                            cmd.ExecuteNonQuery();
+                            
                         }
+                        catch
+                        {
+                            Console.WriteLine("Failure to assign teacher to class.");
+                        }
+
                     }
                 }
                 catch (Exception e)
@@ -53,13 +57,132 @@ namespace MEGAltSolution
             }
         }
 
-        public void PrintTeachers() {
-         
+        public void ÍnsertIntoClassRoom(string classRoomName, string school) {
+            using(SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand("InsertIntoClassRoom", conn);
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@ClassRoom", classRoomName));
+                        cmd.Parameters.Add(new SqlParameter("@School", school));
+
+
+                        // execute the command
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+                            Console.WriteLine("Teacher was added.");
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Failure to add teacher.");
+                        }
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
         }
 
-        public void FetchStudents()
+        public void InsertIntoTeachers(Teacher t)
         {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
 
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand("InsertIntoTeacher", conn);
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@TeacherUsername", t.Username));
+                        cmd.Parameters.Add(new SqlParameter("@TeacherPassword", t.Password));
+                        cmd.Parameters.Add(new SqlParameter("@TeacherFirstName", t.FirstName));
+                        cmd.Parameters.Add(new SqlParameter("@TeacherLastName", t.LastName));
+
+
+                        // execute the command
+                        try {
+                            cmd.ExecuteNonQuery();
+                            Console.WriteLine("Teacher was added.");
+                        }
+                        catch{
+                            Console.WriteLine("Failure to add teacher.");
+                        }
+                        
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+        }
+
+        public List<Teacher> FetchAllTeachers() {
+            List<Teacher> _teachers = new List<Teacher>();
+
+
+                    /*
+           connection.Open();
+           da_1 = new SqlDataAdapter(fetchTeachersQuery, connection);
+           DataSet ds = new DataSet();
+           da_1.Fill(ds);
+           foreach (DataTable table in ds.Tables)
+           {
+               foreach (DataRow dr in table.Rows)
+               {
+                   Console.WriteLine("___TEACHER ROW" + dr.ItemArray.GetValue(1).ToString() + "___");
+                   Console.WriteLine(dr.ItemArray.GetValue(1).ToString());
+                   Console.WriteLine(dr.ItemArray.GetValue(2).ToString());
+                   Console.WriteLine(dr.ItemArray.GetValue(3).ToString());
+                   Console.WriteLine(dr.ItemArray.GetValue(4).ToString());
+               }
+           }
+           */
+            return _teachers;
+        }
+
+        public List<Teacher> FetchStudents()
+        {
+            List<Teacher> _teachers = new List<Teacher>();
+
+
+            /*
+            connection.Open();
+            da_1 = new SqlDataAdapter(fetchTeachersQuery, connection);
+            DataSet ds = new DataSet();
+            da_1.Fill(ds);
+            foreach (DataTable table in ds.Tables)
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    Console.WriteLine("___TEACHER ROW" + dr.ItemArray.GetValue(1).ToString() + "___");
+                    Console.WriteLine(dr.ItemArray.GetValue(1).ToString());
+                    Console.WriteLine(dr.ItemArray.GetValue(2).ToString());
+                    Console.WriteLine(dr.ItemArray.GetValue(3).ToString());
+                    Console.WriteLine(dr.ItemArray.GetValue(4).ToString());
+                }
+            }
+            */
+            return _teachers;
         }
 
     }
