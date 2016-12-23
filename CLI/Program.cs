@@ -206,6 +206,7 @@ namespace CLI
             if (!MEGC.CreateTask(name, description, type, username, sp, classroom, endTime))
             {
                 Console.WriteLine("Wrong input try again from the beginning");
+                Console.ReadKey();
                 CreateTask();
             }
 
